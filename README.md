@@ -100,11 +100,34 @@ Escolhi abordar os seguintes serviços da AWS:
 A escolhas são baseadas em necessidades pessoais e naquilo que a localstack oferece gratuitamente.
 ## Localstack
 ### Docker-compose
-Para iniciar nosso projeto, é necessário subir a localstack em um container com as configurações adequadas para o nosso projeto. Para isso usamos o docker compose. Seguindo a [página oficial](https://docs.localstack.cloud/get-started/#docker-compose) criei arquivo docker-compose.yml no root do projeto
+Para iniciar nosso projeto, é necessário subir a localstack em um container com as configurações adequadas para o ele. Para isso usei o docker compose. Seguindo a [página oficial](https://docs.localstack.cloud/get-started/#docker-compose). Seguindo o que é apresentado na [documentação oficial](https://docs.localstack.cloud/localstack/configuration/), resolvi mudar alguns pontos e meu docker-compose ficou assim:
 
+```yaml
+version: "3.8"
 
-
-
-
+services:
+  localstack:
+    container_name: "${LOCALSTACK_DOCKER_NAME-localstack-terraform-tutorial}"
+    image: localstack/localstack
+    network_mode: bridge
+    ports:
+      - "127.0.0.1:4566:4566"
+      - "127.0.0.1:4571:4571"
+    environment:
+      - MAIN_CONTAINER_NAME=localstack-terraform-tutorial
+      - SERVICES=${SERVICES-dynamodb,lambda,apigateway,sqs,cloudwatch}
+      - DEBUG=${DEBUG-1}
+      - LS_LOG=${LS_LOG-trace}
+      - DATA_DIR=${DATA_DIR-tmp/localstack/data}
+      - LAMBDA_EXECUTOR=${LAMBDA_EXECUTOR-docker}
+      - HOST_TMP_FOLDER=${TMPDIR:-/tmp/}localstack
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - AWS_DEFAULT_REGION=sa-east-1
+      - AWS_ACCESS_KEY_ID='test'
+      - AWS_SECRET_KEY='test'
+    volumes:
+      - "${TMPDIR:-/tmp}/localstack:/tmp/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+```
 
 
