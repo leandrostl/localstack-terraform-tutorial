@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  localstack:
+    container_name: localstack-terraform-tutorial
+    image: localstack/localstack
+    network_mode: bridge
+    ports:
+      - "127.0.0.1:4566:4566"
+      - "127.0.0.1:4571:4571"
+    environment:
+      - MAIN_CONTAINER_NAME=localstack-terraform-tutorial
+      - SERVICES=dynamodb,lambda,apigateway,sqs,cloudwatch,logs
+      - DEBUG=${DEBUG-}
+      - DATA_DIR=tmp/localstack/data
+      - LAMBDA_EXECUTOR=docker_reuse
+      - HOST_TMP_FOLDER=${TMPDIR:-/tmp/}localstack
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - AWS_DEFAULT_REGION=sa-east-1
+      - AWS_ACCESS_KEY_ID='test'
+      - AWS_SECRET_KEY='test'
+    volumes:
+      - "${TMPDIR:-/tmp}/localstack:/tmp/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+
