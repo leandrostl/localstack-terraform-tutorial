@@ -77,7 +77,7 @@ on linux_amd64
 ```
 
 #### **NodeJs**
-A escolha de *NodeJs* para esse tutorial foi bastante concorrida com *Python*. Mas pessou o conhecimento e a reutilização do *JavaScrip* em frontends. Aqui vai uma [análise bem interessante](https://dashbird.io/blog/most-efficient-lambda-language/) sobre as possíveis linguagens para desenvolvimento para *AWS Lambdas*.
+A escolha de *NodeJs* para esse tutorial foi bastante concorrida com *Python*. Mas pesou o conhecimento e a reutilização do *JavaScrip* em frontends. Aqui vai uma [análise bem interessante](https://dashbird.io/blog/most-efficient-lambda-language/) sobre as possíveis linguagens para desenvolvimento para *AWS Lambdas*.
 
 Para instalar o Node no meu ambiente eu optei por usar o [NVM, gerenciador de versão do node](https://nodejs.org/en/download/package-manager/#nvm). Esse gerenciador pode ser baixado do [repositório oficial](https://github.com/nvm-sh/nvm#install--update-script). Depois de instalado o NVM, basta seguir o [comando descrito no repositório](https://github.com/nvm-sh/nvm#usage).
 
@@ -98,8 +98,8 @@ Escolhi abordar os seguintes serviços da AWS:
 * [sqs - Simple Queue Service](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/sqs/index.html): Como o nome bem informa, é um serviço de filas de mensagens.
 
 A escolhas são baseadas em necessidades pessoais e naquilo que a localstack oferece gratuitamente.
+
 ## Localstack
-### Docker-compose
 Para iniciar nosso projeto, é necessário subir a localstack em um container com as configurações adequadas para o ele. Para isso usei o docker compose. Seguindo a [página oficial](https://docs.localstack.cloud/get-started/#docker-compose). Seguindo o que é apresentado na [documentação oficial](https://docs.localstack.cloud/localstack/configuration/), resolvi mudar alguns pontos e meu docker-compose ficou assim:
 
 ```yaml
@@ -122,12 +122,141 @@ services:
       - LAMBDA_EXECUTOR=${LAMBDA_EXECUTOR-docker}
       - HOST_TMP_FOLDER=${TMPDIR:-/tmp/}localstack
       - DOCKER_HOST=unix:///var/run/docker.sock
-      - AWS_DEFAULT_REGION=sa-east-1
-      - AWS_ACCESS_KEY_ID='test'
-      - AWS_SECRET_KEY='test'
     volumes:
       - "${TMPDIR:-/tmp}/localstack:/tmp/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
 ```
+
+Para rodar o docker-compose, utilizei o comando `docker-compose up`, ele vai subir todo o ambiente. Se quiser continuar a usar o mesmo terminal para outras coisas, adicione o `-d` de *detatch*. Para parar se desfazer de todo o ambiente, basta rodar o `docker-compose down -v`. O `-v` informa que você também quer que os volumes criados sejam excluídos, liberando todos os recursos do computador.
+
+Uma vez em execução é possível verificar se está tudo funcionando corretamente através da url `http://localhost:4566/health`.
+
+## Terraform
+
+Agora vamos prover os serviços e suas configurações através do Terraform, especificando os recursos em arquivos `.tf` que coloquei na pasta `terraform`. 
+Seguindo a [documentação do localstack](https://docs.localstack.cloud/integrations/terraform/), primeiro declaramos o `provider "aws"`:
+
+```hcl
+provider "aws" {
+
+  access_key = "test"
+  secret_key = "test"
+  region     = "us-east-1"
+  skip_credentials_validation = true
+  skip_metadata_api_check     = true
+  skip_requesting_account_id  = true
+
+  endpoints {
+    apigateway     = var.defaut_endpoint
+    cloudwatch     = var.defaut_endpoint
+    dynamodb       = var.defaut_endpoint
+    iam            = var.defaut_endpoint
+    lambda         = var.defaut_endpoint
+    sqs            = var.defaut_endpoint
+  }
+}
+``` 
+
+Observe que é necessário apontar os serviços da aws para o LocalStack. Aqui, eu preferi criar uma variável `default_endpoint` para manter o endereço:
+
+```hcl
+variable "defaut_endpoint" {
+  description = "Endpoint padrão para os serviços AWS local."
+  default = "http://localhost:4566"
+  type = string
+} 
+```
+#### **API**
+A declaração da api, o recurso mensagem e os métodos são bem fáceis de compreender. 
+```hcl
+# Declarando nossa api para acesso de mensagens e os métodos
+resource "aws_api_gateway_rest_api" "messages" {
+  name = "messages Api"
+  description = "Api para consumo e envio de mensagens para a aplicação."
+} 
+
+resource "aws_api_gateway_resource" "messages" {
+  rest_api_id = aws_api_gateway_rest_api.messages.id
+  parent_id = aws_api_gateway_rest_api.messages.root_resource_id
+  path_part = "messages"
+}
+
+resource "aws_api_gateway_method" "get_messages" {
+  rest_api_id   = aws_api_gateway_rest_api.messages.id
+  resource_id   = aws_api_gateway_resource.messages.id
+  http_method   = "GET"
+  authorization = "NONE"
+}
+
+resource "aws_api_gateway_method" "post_message" {
+  rest_api_id   = aws_api_gateway_rest_api.messages.id
+  resource_id   = aws_api_gateway_resource.messages.id
+  http_method   = "POST"
+  authorization = "NONE"
+}
+
+resource "aws_api_gateway_integration" "message_receiver" {
+  rest_api_id             = aws_api_gateway_rest_api.messages.id
+  resource_id             = aws_api_gateway_resource.messages.id
+  http_method             = aws_api_gateway_method.post_message.http_method
+  integration_http_method = "POST"
+  type                    = "AWS_PROXY"
+  uri                     = aws_lambda_function.message_receiver.invoke_arn
+}
+
+resource "aws_api_gateway_deployment" "messages" {
+  depends_on = [
+    aws_api_gateway_integration.message_receiver,
+  ]
+
+  rest_api_id = aws_api_gateway_rest_api.messages.id
+  stage_name  = "dev"
+}
+```
+
+Nossa API, portanto, tem um recurso `message` que é disponível no path de `/messages` e permite os métodos `POST` e `GET` sem necessidade de qualquer autorização de acesso.
+
+Como vimos em nosso diagrama, o objetivo do projeto é que as mensagens enviadas sejam enviadas para uma fila por uma função Lambda e depois recuperada por outra função e gravada no banco de dados. Aqui, já declaramos a integração também com a função lambda. Vale Notar:
+
+* `integration_http_method` tem que ser do tipo `POST` para integração com Lambda. Ele informa como a api vai interagir com o backend;
+* `type` deve ser, no nosso caso, `AWS_PROXY`. Isso permite que a integração chame um recurso da AWS, no nosso caso a Lambda, e passe a request para a Lambda tratar.
+
+#### **Lambdas**
+Para receber a mensagem da API, declaramos no nosso `lambda.tf`:
+
+```hcl
+# Lambdas para processar as mensagens
+data "archive_file" "message_receiver" {
+  type        = "zip"
+  output_path = "${path.module}/message_receiver.zip"
+  source_dir = "${path.module}/lambdas/message-receiver/"
+}
+
+resource "aws_lambda_function" "message_receiver" {
+  function_name = "message_receiver"
+  filename      = data.archive_file.message_receiver.output_path
+  source_code_hash = data.archive_file.message_receiver.output_base64sha256
+  handler       = "index.handler"
+  runtime       = "nodejs14.x"
+  role          = "fake_role"
+}
+
+``` 
+
+Criamos aqui um arquivo que foi criado na execução do terraform a partir da compactação do nosso arquivo `index.js`. Esse arquivo é para a lambda e por fim integramos a API com a função. 
+#### **Fila SQS**
+
+Declarar a fila também é muito simples:
+```hcl
+resource "aws_sqs_queue" "messages" {
+    name = "Messages"
+}
+```
+
+#### **Dynamo**
+
+
+
+
 
 

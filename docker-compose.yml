@@ -12,10 +12,14 @@ services:
       - MAIN_CONTAINER_NAME=localstack-terraform-tutorial
       - SERVICES=${SERVICES-dynamodb,lambda,apigateway,sqs,cloudwatch}
       - DEBUG=${DEBUG-1}
+      - LS_LOG=${LS_LOG-trace}
       - DATA_DIR=${DATA_DIR-tmp/localstack/data}
       - LAMBDA_EXECUTOR=${LAMBDA_EXECUTOR-docker}
       - HOST_TMP_FOLDER=${TMPDIR:-/tmp/}localstack
       - DOCKER_HOST=unix:///var/run/docker.sock
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID-test}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY-test}
+      - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION-us-east-1}
     volumes:
       - "${TMPDIR:-/tmp}/localstack:/tmp/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
