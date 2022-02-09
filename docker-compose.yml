@@ -15,6 +15,8 @@ services:
       - LS_LOG=${LS_LOG-trace}
       - DATA_DIR=${DATA_DIR-tmp/localstack/data}
       - LAMBDA_EXECUTOR=${LAMBDA_EXECUTOR-docker}
+      - LAMBDA_REMOTE_DOCKER=true
+      - LAMBDA_REMOVE_CONTAINERS=true
       - HOST_TMP_FOLDER=${TMPDIR:-/tmp/}localstack
       - DOCKER_HOST=unix:///var/run/docker.sock
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID-test}

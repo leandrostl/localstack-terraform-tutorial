@@ -1,8 +1,10 @@
+const queue = require('./src/queue')
+
 const defaultHeaders = {
-  'Content-Type': 'text/html; charset=utf-8',
+  'Content-Type': 'application/json',
 };
 
-const response = ({ statusCode, headers = defaultHeaders, body }) => {
+const createResponse = ({ statusCode, headers = defaultHeaders, body }) => {
   return {
     statusCode,
     headers,
@@ -10,11 +12,28 @@ const response = ({ statusCode, headers = defaultHeaders, body }) => {
   };
 };
 
-exports.handler = (event, context, callback) => {
-  callback(
-    null,
-    response({
+exports.handler = async (event, context, callback) => {
+  let message;
+  try {
+    message = createResponse({
       statusCode: 200,
-      body: `<h2>Seriously? Another Hello World, ${JSON.parse(event.body).name}?</h2>`
-    }));
+      body: JSON.stringify(
+        {
+          message: `Message sent to proccessing queue. Message id: ${await queue.send(event.body)}.`
+        }
+      )
+    });
+  } catch (error) {
+    message = createResponse({
+      statusCode: 500,
+      body: JSON.stringify(
+        {
+          message: `Could not send message to queue. Error: ${error}`
+        }
+      )
+    });
+  }
+
+
+  callback(null, message);
 }

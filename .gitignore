@@ -1,0 +1,3 @@
+terraform/*terraform*
+lambdas/dist/*
+lambdas/*/node_modules/*
