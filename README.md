@@ -238,22 +238,29 @@ Para receber a mensagem da API, declaramos no nosso `lambda.tf`:
 # Lambdas para processar as frases
 data "archive_file" "quote_receiver" {
   type        = "zip"
-  output_path = "${path.module}/quote_receiver.zip"
-  source_dir = "${path.module}/lambdas/quote-receiver/"
+  output_path = "../lambdas/dist/quote_receiver.zip"
+  source_dir  = "../lambdas/quote-receiver/"
 }
 
 resource "aws_lambda_function" "quote_receiver" {
-  function_name = "quote_receiver"
-  filename      = data.archive_file.quote_receiver.output_path
+  function_name    = "quote_receiver"
+  filename         = data.archive_file.quote_receiver.output_path
   source_code_hash = data.archive_file.quote_receiver.output_base64sha256
-  handler       = "index.handler"
-  runtime       = "nodejs14.x"
-  role          = "fake_role"
+  handler          = "index.handler"
+  runtime          = "nodejs14.x"
+  role             = "fake_role"
+  environment {
+    variables = {
+      SQS_URL = "${resource.aws_sqs_queue.quotes.url}"
+    }
+  }
 }
 
 ``` 
 
-Criamos aqui um arquivo que foi criado na execução do terraform a partir da compactação do nosso arquivo `index.js`. Esse arquivo é para a lambda e por fim integramos a API com a função. 
+Geramos aqui um arquivo que foi criado na execução do terraform a partir da compactação dos dados dentro da pasta `lambdas/quote-receiver`. O arquivo compactado é referenciado na criação da função. O mesmo ocorre para nossas outras funções, de persistência dos dados e de recuperação.
+
+Um ponto interessante é que é possível passar variáveis de ambiente para a função, como é visto na passagem da variável `SQS_URL`.
 #### **Fila SQS**
 
 Declarar a fila também é muito simples:
@@ -265,7 +272,23 @@ resource "aws_sqs_queue" "quotes" {
 
 #### **Dynamo**
 
+O provisionamento de uma tabela nova no dynamo demanda apeans os campos a seguir:
 
+```hcl
+resource "aws_dynamodb_table" "quotes" {
+    name = "Quotes"
+    hash_key = "Author"
+    billing_mode = "PAY_PER_REQUEST"
+    attribute {
+      name = "Author"
+      type = "S"
+    }
+}
+```
+
+Observe que eu poderia já informar os demais atributos, mas sou obrigado apenas a informar aquele referente à `hash_key`. 
+Esse atributo é equivalente para a AWS ao `partition key`. Caso eu desejasse criar uma `sort key` eu deveria passá-la como 
+`range_key` e também informar os dados do atributo.
 
 
 
