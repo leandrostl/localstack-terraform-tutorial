@@ -1,0 +1,9 @@
+{
+  "name": "quote-persister",
+  "version": "1.0.0",
+  "description": "Process quotes from SQS events, persisting them to dynamodb.",
+  "main": "index.js",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.51.0"
+  }
+}
