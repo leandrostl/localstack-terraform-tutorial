@@ -1,0 +1,9 @@
+{
+  "name": "quote-receiver",
+  "version": "1.0.0",
+  "description": "Receives quotes from API and send them to a queue.",
+  "main": "index.js",
+  "dependencies": {
+    "@aws-sdk/client-sqs": "^3.51.0"
+  }
+}

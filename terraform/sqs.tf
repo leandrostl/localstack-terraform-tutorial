@@ -1,3 +1,3 @@
-resource "aws_sqs_queue" "messages" {
-    name = "Messages"
+resource "aws_sqs_queue" "quotes" {
+    name = "Quotes"
 }
