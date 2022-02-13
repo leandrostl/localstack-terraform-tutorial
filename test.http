@@ -1,0 +1,9 @@
+POST http://localhost:4566/restapis/ym5fjlg0zd/dev/_user_request_/messages
+Content-Type: application/json
+
+{
+    "author" : "Cruella de Vil",
+    "message": "We lose more women to marriage than war, famine, and disease.",
+    "movie": "101 Dalmatians",
+    "year": 1961
+}
