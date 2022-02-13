@@ -256,9 +256,17 @@ resource "aws_lambda_function" "quote_receiver" {
   }
 }
 
+---
+resource "aws_lambda_event_source_mapping" "quotes" {
+  event_source_arn = aws_sqs_queue.quotes.arn
+  function_name    = aws_lambda_function.quote_persister.arn
+}
+
 ``` 
 
 Geramos aqui um arquivo que foi criado na execução do terraform a partir da compactação dos dados dentro da pasta `lambdas/quote-receiver`. O arquivo compactado é referenciado na criação da função. O mesmo ocorre para nossas outras funções, de persistência dos dados e de recuperação.
+
+Como é possível notar, temos um mapeamento da função `quote_persister` com a fila `SQS`. Isso nos permite receber eventos com as informações inseridas na fila sempre que forem adicionadas novas mensagens à ela.
 
 Um ponto interessante é que é possível passar variáveis de ambiente para a função, como é visto na passagem da variável `SQS_URL`.
 #### **Fila SQS**
