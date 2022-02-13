@@ -7,7 +7,9 @@
 
 ## O que vamos fazer
 ### Repositório
+Todo esse projeto está disponível neste [repositório](https://github.com/leandrostl/localstack-terraform-tutorial).
 ### Diagrama
+![Diagrama do projeto](localstack-tutorial.png)
 ### **Configurando o ambiente:**
 Estou usando uma máquina rodando ubuntu:
 ```bash
@@ -39,7 +41,7 @@ Nesse momento a versão que tenho do docker-compose instalada é:
 ```
 
 #### **Python**
-A *localstack* utiliza o python para rodar. Dessa forma precisei instalar o compilador python e o gerenciador de pacotes no meu ambiente. Segui a [documentação oficial](https://python.org.br/instalacao-linux/). Instalei as seguintes versões:
+A *localstack* utiliza o python para rodar. Assim precisei instalar o compilador python e o gerenciador de pacotes no meu ambiente. Segui a [documentação oficial](https://python.org.br/instalacao-linux/). Instalei as seguintes versões:
 ```bash
    leandro@leandro-desktop:~$ python3 --version
    Python 3.8.10
@@ -91,10 +93,10 @@ leandro@leandro-desktop:~$ npm -v
 
 ## AWS Cloud
 Escolhi abordar os seguintes serviços da AWS:
-* [apigateway](https://docs.aws.amazon.com/cli/latest/reference/apigateway/index.html): Permite criar endpoints e associa-los a um backend.
-* [cloudwatch](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/cloudwatch/index.html?highlight=cloudwatch): Permite monitorar a aplicação com alarmes e logs.
+* [API Gateway](https://docs.aws.amazon.com/cli/latest/reference/apigateway/index.html): Permite criar endpoints e associa-los a um backend.
+* [Cloudwatch](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/cloudwatch/index.html?highlight=cloudwatch): Permite monitorar a aplicação com alarmes e logs.
 * [lambda](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/lambda/index.html): Permite executar uma função sem a necessidade de provisionar ou gerenciar um servidor.
-* [dynamodb](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/dynamodb/index.html): Banco de dados não relacional, *NoSQL*, da AWS.
+* [DynamoDB](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/dynamodb/index.html): Banco de dados não relacional, *NoSQL*, da AWS.
 * [sqs - Simple Queue Service](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/sqs/index.html): Como o nome bem informa, é um serviço de filas de mensagens.
 
 A escolhas são baseadas em necessidades pessoais e naquilo que a localstack oferece gratuitamente.
@@ -107,24 +109,32 @@ version: "3.8"
 
 services:
   localstack:
-    container_name: "${LOCALSTACK_DOCKER_NAME-localstack-terraform-tutorial}"
+    # Determino o nome do container principal da aplicação.
+    container_name: ${LOCALSTACK_DOCKER_NAME-localstack-terraform-tutorial}
     image: localstack/localstack
     network_mode: bridge
     ports:
       - "127.0.0.1:4566:4566"
       - "127.0.0.1:4571:4571"
     environment:
-      - MAIN_CONTAINER_NAME=localstack-terraform-tutorial
+      # Como eu resolvi trocar o nome do container principal eu preciso informar em uma
+      # variável de ambiente.
+      - MAIN_CONTAINER_NAME=${LOCALSTACK_DOCKER_NAME-localstack-terraform-tutorial}
+      # Informo os serviços da AWS que desejo usar.
       - SERVICES=${SERVICES-dynamodb,lambda,apigateway,sqs,cloudwatch}
-      - DEBUG=${DEBUG-1}
-      - LS_LOG=${LS_LOG-trace}
+      # Diretório para salvar dados localmente.
       - DATA_DIR=${DATA_DIR-tmp/localstack/data}
+      # Como nossas funções lambda serão executadas. Nesse caso escolho o padrão
+      # rodar as funções dentro de containers para cada uma.
       - LAMBDA_EXECUTOR=${LAMBDA_EXECUTOR-docker}
-      - HOST_TMP_FOLDER=${TMPDIR:-/tmp/}localstack
-      - DOCKER_HOST=unix:///var/run/docker.sock
+      # Esse parâmetro diz respeito a como a função será passada para o container. 
+      # Se ela será montada no container ou será copiada. Nesse caso, escolhi copiar
+      # todo o arquivo zip para dentro do container.
+      - LAMBDA_REMOTE_DOCKER=true
     volumes:
       - "${TMPDIR:-/tmp}/localstack:/tmp/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
+
 ```
 
 Para rodar o docker-compose, utilizei o comando `docker-compose up`, ele vai subir todo o ambiente. Se quiser continuar a usar o mesmo terminal para outras coisas, adicione o `-d` de *detatch*. Para parar se desfazer de todo o ambiente, basta rodar o `docker-compose down -v`. O `-v` informa que você também quer que os volumes criados sejam excluídos, liberando todos os recursos do computador.
@@ -169,54 +179,54 @@ variable "defaut_endpoint" {
 #### **API**
 A declaração da api, o recurso mensagem e os métodos são bem fáceis de compreender. 
 ```hcl
-# Declarando nossa api para acesso de mensagens e os métodos
-resource "aws_api_gateway_rest_api" "messages" {
-  name = "messages Api"
-  description = "Api para consumo e envio de mensagens para a aplicação."
-} 
-
-resource "aws_api_gateway_resource" "messages" {
-  rest_api_id = aws_api_gateway_rest_api.messages.id
-  parent_id = aws_api_gateway_rest_api.messages.root_resource_id
-  path_part = "messages"
+# Declarando nossa api para acesso de frases e os métodos
+resource "aws_api_gateway_rest_api" "quotes" {
+  name        = "Quotes"
+  description = "Api para consumo e envio de frases para a aplicação."
 }
 
-resource "aws_api_gateway_method" "get_messages" {
-  rest_api_id   = aws_api_gateway_rest_api.messages.id
-  resource_id   = aws_api_gateway_resource.messages.id
+resource "aws_api_gateway_resource" "quotes" {
+  rest_api_id = aws_api_gateway_rest_api.quotes.id
+  parent_id   = aws_api_gateway_rest_api.quotes.root_resource_id
+  path_part   = "quotes"
+}
+
+resource "aws_api_gateway_method" "get_quotes" {
+  rest_api_id   = aws_api_gateway_rest_api.quotes.id
+  resource_id   = aws_api_gateway_resource.quotes.id
   http_method   = "GET"
   authorization = "NONE"
 }
 
-resource "aws_api_gateway_method" "post_message" {
-  rest_api_id   = aws_api_gateway_rest_api.messages.id
-  resource_id   = aws_api_gateway_resource.messages.id
+resource "aws_api_gateway_method" "post_quote" {
+  rest_api_id   = aws_api_gateway_rest_api.quotes.id
+  resource_id   = aws_api_gateway_resource.quotes.id
   http_method   = "POST"
   authorization = "NONE"
 }
 
-resource "aws_api_gateway_integration" "message_receiver" {
-  rest_api_id             = aws_api_gateway_rest_api.messages.id
-  resource_id             = aws_api_gateway_resource.messages.id
-  http_method             = aws_api_gateway_method.post_message.http_method
+resource "aws_api_gateway_integration" "quote_receiver" {
+  rest_api_id             = aws_api_gateway_rest_api.quotes.id
+  resource_id             = aws_api_gateway_resource.quotes.id
+  http_method             = aws_api_gateway_method.post_quote.http_method
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
-  uri                     = aws_lambda_function.message_receiver.invoke_arn
+  uri                     = aws_lambda_function.quote_receiver.invoke_arn
 }
 
-resource "aws_api_gateway_deployment" "messages" {
+resource "aws_api_gateway_deployment" "quotes" {
   depends_on = [
-    aws_api_gateway_integration.message_receiver,
+    aws_api_gateway_integration.quote_receiver,
   ]
 
-  rest_api_id = aws_api_gateway_rest_api.messages.id
+  rest_api_id = aws_api_gateway_rest_api.quotes.id
   stage_name  = "dev"
 }
 ```
 
-Nossa API, portanto, tem um recurso `message` que é disponível no path de `/messages` e permite os métodos `POST` e `GET` sem necessidade de qualquer autorização de acesso.
+Nossa API, portanto, tem um recurso `quote` que é disponível no path de `/quotes` e permite os métodos `POST` e `GET` sem necessidade de qualquer autorização de acesso.
 
-Como vimos em nosso diagrama, o objetivo do projeto é que as mensagens enviadas sejam enviadas para uma fila por uma função Lambda e depois recuperada por outra função e gravada no banco de dados. Aqui, já declaramos a integração também com a função lambda. Vale Notar:
+Como vimos em nosso diagrama, o objetivo do projeto é que as frases enviadas sejam enviadas para uma fila por uma função Lambda e depois recuperada por outra função e gravada no banco de dados. Aqui, já declaramos a integração também com a função lambda. Vale Notar:
 
 * `integration_http_method` tem que ser do tipo `POST` para integração com Lambda. Ele informa como a api vai interagir com o backend;
 * `type` deve ser, no nosso caso, `AWS_PROXY`. Isso permite que a integração chame um recurso da AWS, no nosso caso a Lambda, e passe a request para a Lambda tratar.
@@ -225,17 +235,17 @@ Como vimos em nosso diagrama, o objetivo do projeto é que as mensagens enviadas
 Para receber a mensagem da API, declaramos no nosso `lambda.tf`:
 
 ```hcl
-# Lambdas para processar as mensagens
-data "archive_file" "message_receiver" {
+# Lambdas para processar as frases
+data "archive_file" "quote_receiver" {
   type        = "zip"
-  output_path = "${path.module}/message_receiver.zip"
-  source_dir = "${path.module}/lambdas/message-receiver/"
+  output_path = "${path.module}/quote_receiver.zip"
+  source_dir = "${path.module}/lambdas/quote-receiver/"
 }
 
-resource "aws_lambda_function" "message_receiver" {
-  function_name = "message_receiver"
-  filename      = data.archive_file.message_receiver.output_path
-  source_code_hash = data.archive_file.message_receiver.output_base64sha256
+resource "aws_lambda_function" "quote_receiver" {
+  function_name = "quote_receiver"
+  filename      = data.archive_file.quote_receiver.output_path
+  source_code_hash = data.archive_file.quote_receiver.output_base64sha256
   handler       = "index.handler"
   runtime       = "nodejs14.x"
   role          = "fake_role"
@@ -248,8 +258,8 @@ Criamos aqui um arquivo que foi criado na execução do terraform a partir da co
 
 Declarar a fila também é muito simples:
 ```hcl
-resource "aws_sqs_queue" "messages" {
-    name = "Messages"
+resource "aws_sqs_queue" "quotes" {
+    name = "Quotes"
 }
 ```
 

@@ -2,26 +2,28 @@ version: "3.8"
 
 services:
   localstack:
-    container_name: "${LOCALSTACK_DOCKER_NAME-localstack-terraform-tutorial}"
+    # Determino o nome do container principal da aplicação.
+    container_name: ${LOCALSTACK_DOCKER_NAME-localstack-terraform-tutorial}
     image: localstack/localstack
     network_mode: bridge
     ports:
       - "127.0.0.1:4566:4566"
       - "127.0.0.1:4571:4571"
     environment:
-      - MAIN_CONTAINER_NAME=localstack-terraform-tutorial
+      # Como eu resolvi trocar o nome do container principal eu preciso informar em uma
+      # variável de ambiente.
+      - MAIN_CONTAINER_NAME=${LOCALSTACK_DOCKER_NAME-localstack-terraform-tutorial}
+      # Informo os serviços da AWS que desejo usar.
       - SERVICES=${SERVICES-dynamodb,lambda,apigateway,sqs,cloudwatch}
-      - DEBUG=${DEBUG-1}
-      - LS_LOG=${LS_LOG-trace}
+      # Diretório para salvar dados localmente.
       - DATA_DIR=${DATA_DIR-tmp/localstack/data}
+      # Como nossas funções lambda serão executadas. Nesse caso escolho o padrão
+      # rodar as funções dentro de containers para cada uma.
       - LAMBDA_EXECUTOR=${LAMBDA_EXECUTOR-docker}
+      # Esse parâmetro diz respeito a como a função será passada para o container. 
+      # Se ela será montada no container ou será copiada. Nesse caso, escolhi copiar
+      # todo o arquivo zip para dentro do container.
       - LAMBDA_REMOTE_DOCKER=true
-      - LAMBDA_REMOVE_CONTAINERS=true
-      - HOST_TMP_FOLDER=${TMPDIR:-/tmp/}localstack
-      - DOCKER_HOST=unix:///var/run/docker.sock
-      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID-test}
-      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY-test}
-      - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION-us-east-1}
     volumes:
       - "${TMPDIR:-/tmp}/localstack:/tmp/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
