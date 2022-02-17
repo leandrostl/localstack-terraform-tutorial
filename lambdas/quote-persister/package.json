@@ -4,6 +4,7 @@
   "description": "Process quotes from SQS events, persisting them to dynamodb.",
   "main": "index.js",
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.51.0"
+    "@aws-sdk/client-dynamodb": "^3.51.0",
+    "@aws/dynamodb-auto-marshaller": "^0.7.1"
   }
 }
