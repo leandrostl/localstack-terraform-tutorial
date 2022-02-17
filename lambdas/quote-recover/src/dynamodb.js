@@ -7,7 +7,7 @@ exports.getQuote = async (author) => {
     const quotes = await client.send(
         new QueryCommand({
             TableName: "Quotes",
-            KeyConditionExpression: "Author = :a",
+            KeyConditionExpression: "author = :a",
             ExpressionAttributeValues: {
                 ":a": { S: author }
             }

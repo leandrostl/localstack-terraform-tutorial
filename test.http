@@ -1,4 +1,4 @@
-@apiId=wuyi15xwfk
+@apiId=y4zdl0b13h
 POST http://localhost:4566/restapis/{{apiId}}/dev/_user_request_/quotes
 Content-Type: application/json
 
@@ -44,4 +44,14 @@ Content-Type: application/json
     "year": 1961
 }
 ###
-GET http://localhost:4566/restapis/{{apiId}}/dev/_user_request_/quotes?author=Joker
+POST http://localhost:4566/restapis/{{apiId}}/dev/_user_request_/quotes
+Content-Type: application/json
+
+{
+    "author" : "Ursula",
+    "quote": "Don't underestimate the importance of body language.",
+    "movie": "The Little Mermaid",
+    "year": 1989
+}
+###
+GET http://localhost:4566/restapis/{{apiId}}/dev/_user_request_/quotes?author=Ursula

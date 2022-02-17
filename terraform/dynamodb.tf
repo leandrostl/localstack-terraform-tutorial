@@ -1,9 +1,14 @@
 resource "aws_dynamodb_table" "quotes" {
     name = "Quotes"
-    hash_key = "Author"
+    hash_key = "author"
+    range_key = "quote"
     billing_mode = "PAY_PER_REQUEST"
     attribute {
-      name = "Author"
+      name = "author"
+      type = "S"
+    }
+    attribute {
+      name = "quote"
       type = "S"
     }
 }
