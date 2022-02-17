@@ -7,9 +7,16 @@
 
 ## O que vamos fazer
 ### Repositório
-Todo esse projeto está disponível neste [repositório](https://github.com/leandrostl/localstack-terraform-tutorial).
-### Diagrama
+Todo esse projeto e os códigos completos estão disponíveis no seguinte [repositório](https://github.com/leandrostl/localstack-terraform-tutorial). Este texto contem alguns
+pedaços de código, mas que podem não estar completos.
+
+### Definição da nossa POC
 ![Diagrama do projeto](localstack-tutorial.png)
+
+O objetivo desse artigo é exemplificar o uso da LocalStack e o que é necessário para rodar um projeto simples. Para além desse projeto, a ferramenta possui inúmeros outros recursos
+que não abordarei aqui, como sdk para testes, um [dashboard](https://app.localstack.cloud/) que pode ser acessado quando sua aplicação estiver rodando, além de disponibilizar vários outros
+serviços da AWS.
+
 ### **Configurando o ambiente:**
 Estou usando uma máquina rodando ubuntu:
 ```bash
@@ -29,7 +36,7 @@ Vamos começar instalando o docker. Segui precisamente a [documentação](https:
     Docker version 20.10.12, build e91ed57
 ```
 #### **Docker Compose**
-Docker compose foi um pouco mais complicado a instalação. A página do docker aponta para um compose numa versão bem antiga. Preferi entrar no [repositório do github](https://github.com/docker/compose/releases) para verificar e alterar o endereço no comando fornecido na página do Docker. Desta forma segui os passos:
+Docker compose foi um pouco mais complicado para instalar. A página do docker aponta para um *compose* numa versão bem antiga. Preferi entrar no [repositório do github](https://github.com/docker/compose/releases) para verificar e alterar o endereço no comando fornecido na página do Docker. Desta forma segui os passos:
 1. `sudo curl -L "https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose`
 1. `sudo chmod +x /usr/local/bin/docker-compose`
 
@@ -41,7 +48,7 @@ Nesse momento a versão que tenho do docker-compose instalada é:
 ```
 
 #### **Python**
-A *localstack* utiliza o python para rodar. Assim precisei instalar o compilador python e o gerenciador de pacotes no meu ambiente. Segui a [documentação oficial](https://python.org.br/instalacao-linux/). Instalei as seguintes versões:
+A *localstack* faz uso do Python. Assim precisei instalar o compilador da linguagem e o gerenciador de pacotes. Segui a [documentação oficial](https://python.org.br/instalacao-linux/). Instalei as seguintes versões:
 ```bash
    leandro@leandro-desktop:~$ python3 --version
    Python 3.8.10
@@ -95,14 +102,14 @@ leandro@leandro-desktop:~$ npm -v
 Escolhi abordar os seguintes serviços da AWS:
 * [API Gateway](https://docs.aws.amazon.com/cli/latest/reference/apigateway/index.html): Permite criar endpoints e associa-los a um backend.
 * [Cloudwatch](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/cloudwatch/index.html?highlight=cloudwatch): Permite monitorar a aplicação com alarmes e logs.
-* [lambda](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/lambda/index.html): Permite executar uma função sem a necessidade de provisionar ou gerenciar um servidor.
+* [Lambda](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/lambda/index.html): Permite executar uma função sem a necessidade de provisionar ou gerenciar um servidor.
 * [DynamoDB](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/dynamodb/index.html): Banco de dados não relacional, *NoSQL*, da AWS.
-* [sqs - Simple Queue Service](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/sqs/index.html): Como o nome bem informa, é um serviço de filas de mensagens.
+* [SQS - Simple Queue Service](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/sqs/index.html): Como o nome bem informa, é um serviço de filas de mensagens.
 
 A escolhas são baseadas em necessidades pessoais e naquilo que a localstack oferece gratuitamente.
 
 ## Localstack
-Para iniciar nosso projeto, é necessário subir a localstack em um container com as configurações adequadas para o ele. Para isso usei o docker compose. Seguindo a [página oficial](https://docs.localstack.cloud/get-started/#docker-compose). Seguindo o que é apresentado na [documentação oficial](https://docs.localstack.cloud/localstack/configuration/), resolvi mudar alguns pontos e meu docker-compose ficou assim:
+Para iniciar nosso projeto, é necessário subir a localstack em um container com as configurações adequadas para o ele. Para isso usei o docker compose e criei um script seguindo a [página oficial](https://docs.localstack.cloud/get-started/#docker-compose). Além disso, busquei compreender e alterar alguns pontos, conforme a [documentação de configuração](https://docs.localstack.cloud/localstack/configuration/). Com isso, meu `docker-compose` ficou assim:
 
 ```yaml
 version: "3.8"
@@ -139,7 +146,7 @@ services:
 
 Para rodar o docker-compose, utilizei o comando `docker-compose up`, ele vai subir todo o ambiente. Se quiser continuar a usar o mesmo terminal para outras coisas, adicione o `-d` de *detatch*. Para parar se desfazer de todo o ambiente, basta rodar o `docker-compose down -v`. O `-v` informa que você também quer que os volumes criados sejam excluídos, liberando todos os recursos do computador.
 
-Uma vez em execução é possível verificar se está tudo funcionando corretamente através da url `http://localhost:4566/health`.
+Uma vez em execução, é possível verificar se está tudo funcionando corretamente através da url `http://localhost:4566/health`.
 
 ## Terraform
 
@@ -177,7 +184,7 @@ variable "defaut_endpoint" {
 } 
 ```
 #### **API**
-A declaração da api, o recurso mensagem e os métodos são bem fáceis de compreender. 
+A declaração da api, o recurso quotes e os métodos são bem fáceis de compreender. 
 ```hcl
 # Declarando nossa api para acesso de frases e os métodos
 resource "aws_api_gateway_rest_api" "quotes" {
@@ -278,17 +285,17 @@ resource "aws_sqs_queue" "quotes" {
 }
 ```
 
-#### **Dynamo**
+#### **DynamoDB**
 
 O provisionamento de uma tabela nova no dynamo demanda apeans os campos a seguir:
 
 ```hcl
 resource "aws_dynamodb_table" "quotes" {
     name = "Quotes"
-    hash_key = "Author"
+    hash_key = "author"
     billing_mode = "PAY_PER_REQUEST"
     attribute {
-      name = "Author"
+      name = "author"
       type = "S"
     }
 }
@@ -296,7 +303,37 @@ resource "aws_dynamodb_table" "quotes" {
 
 Observe que eu poderia já informar os demais atributos, mas sou obrigado apenas a informar aquele referente à `hash_key`. 
 Esse atributo é equivalente para a AWS ao `partition key`. Caso eu desejasse criar uma `sort key` eu deveria passá-la como 
-`range_key` e também informar os dados do atributo.
+`range_key` e também informar os dados do atributo. No código exemplo usei `sort key` para me permitir usar frases diferentes
+do mesmo autor.
+
+## Código
+
+Temos apenas três funções muito simples, uma para receber quotes, uma para persistir e outra para recuperar. Os códigos completos estão no repositório, mas 
+vale a pena pontuar alguns detalhes:
+
+```javascript
+const { DynamoDBClient, PutItemCommand } = require("@aws-sdk/client-dynamodb");
+const { Marshaller } = require("@aws/dynamodb-auto-marshaller");
+
+
+const client = new DynamoDBClient({ endpoint: `http://${process.env.LOCALSTACK_HOSTNAME}:4566` });
+const marshaller = new Marshaller();
+exports.save = (quote) => client.send(new PutItemCommand({
+    TableName: "Quotes",
+    Item: marshaller.marshallItem(quote)
+}));
+
+```
+
+- O código para persistência de dados no Dynamo mostra o uso da SDK para JavaScript V3. 
+- Diferente da V2, essa versão permite importar apenas módulos que realmente serão necessários para a aplicação, deixando a Lambda muito mais leve. 
+- É necessário configurar o endpoint para os serviços da AWS.
+- Usei a biblioteca `Marshaller` que é um mapper entre valores nativos JavaScript e AttributeValues do DynamoDB.
+- A melhor forma de ver logs da aplicação é pelo [dashboard](https://app.localstack.cloud/) da LocalStack.
+
+## Conclusão
+A LocalStack é uma ótima ferramenta para realizar testes automatizados e rodar a aplicação em ambiente local, durante o desenvolvimento. Ela elimina a preocupação de
+se *sujar* um ambiente compartilhado por mais desenvolvedores e de se acabar tendo gastos financeiros por uso indevido da AWS, melhorando muito o processo de criação do código.
 
 
 
