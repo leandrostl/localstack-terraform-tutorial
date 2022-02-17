@@ -19,6 +19,21 @@ resource "aws_lambda_function" "quote_receiver" {
   }
 }
 
+data "archive_file" "quote_recover" {
+  type        = "zip"
+  output_path = "../lambdas/dist/quote_recover.zip"
+  source_dir  = "../lambdas/quote-recover/"
+}
+
+resource "aws_lambda_function" "quote_recover" {
+  function_name    = "quote_recover"
+  filename         = data.archive_file.quote_recover.output_path
+  source_code_hash = data.archive_file.quote_recover.output_base64sha256
+  handler          = "index.handler"
+  runtime          = "nodejs14.x"
+  role             = "fake_role"
+}
+
 data "archive_file" "quote_persister" {
   type        = "zip"
   output_path = "../lambdas/dist/quote_persister.zip"

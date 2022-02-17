@@ -1,0 +1,10 @@
+{
+  "name": "quote-recover",
+  "version": "1.0.0",
+  "description": "Find and recover quotes from authors.",
+  "main": "index.js",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.51.0",
+    "@aws/dynamodb-auto-marshaller": "^0.7.1"
+  }
+}

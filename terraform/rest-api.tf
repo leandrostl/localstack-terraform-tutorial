@@ -33,6 +33,15 @@ resource "aws_api_gateway_integration" "quote_receiver" {
   uri                     = aws_lambda_function.quote_receiver.invoke_arn
 }
 
+resource "aws_api_gateway_integration" "quote_recover" {
+  rest_api_id             = aws_api_gateway_rest_api.quotes.id
+  resource_id             = aws_api_gateway_resource.quotes.id
+  http_method             = aws_api_gateway_method.get_quotes.http_method
+  integration_http_method = "POST"
+  type                    = "AWS_PROXY"
+  uri                     = aws_lambda_function.quote_recover.invoke_arn
+}
+
 resource "aws_api_gateway_deployment" "quotes" {
   depends_on = [
     aws_api_gateway_integration.quote_receiver,
