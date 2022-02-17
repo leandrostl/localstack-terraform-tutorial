@@ -1,4 +1,4 @@
-@apiId=ilmxxw8u0d
+@apiId=wuyi15xwfk
 POST http://localhost:4566/restapis/{{apiId}}/dev/_user_request_/quotes
 Content-Type: application/json
 
@@ -7,12 +7,41 @@ Content-Type: application/json
     "quote": "Perfectly balanced... as all things should be.",
     "movie": "Avengers: Infinity War",
     "year": 2018
-
 }
 
-# {
-#     "author" : "Cruella de Vil",
-#     "quote": "We lose more women to marriage than war, famine, and disease.",
-#     "movie": "101 Dalmatians",
-#     "year": 1961
-# }
+###
+POST http://localhost:4566/restapis/{{apiId}}/dev/_user_request_/quotes
+Content-Type: application/json
+
+{
+    "author": "Joker",
+    "quote": "Introduce a little anarchy, upset the established order, and everything becomes chaos.",
+    "movie": "Batman: The Dark Knight",
+    "year": 2008
+}
+
+
+###
+POST http://localhost:4566/restapis/{{apiId}}/dev/_user_request_/quotes
+Content-Type: application/json
+
+{
+    "author": "Joker",
+    "quote": "In their last moments, people show you who they really are.",
+    "movie": "Batman: The Dark Knight",
+    "year": 2008
+}
+
+
+###
+POST http://localhost:4566/restapis/{{apiId}}/dev/_user_request_/quotes
+Content-Type: application/json
+
+{
+    "author" : "Cruella de Vil",
+    "quote": "We lose more women to marriage than war, famine, and disease.",
+    "movie": "101 Dalmatians",
+    "year": 1961
+}
+###
+GET http://localhost:4566/restapis/{{apiId}}/dev/_user_request_/quotes?author=Joker
