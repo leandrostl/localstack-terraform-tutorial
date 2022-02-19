@@ -11,5 +11,5 @@ const createResponse = ({ statusCode, headers = defaultHeaders, message }) => {
   };
 };
 
-exports.okResponse = (message) => { return createResponse({ statusCode: 200, message: message }) }
+exports.createdResponse = (message) => { return createResponse({ statusCode: 201, message: message }) }
 exports.errorResponse = (message) => { return createResponse({ statusCode: 500, message: message }) }
