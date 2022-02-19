@@ -1,57 +1,39 @@
-@apiId=y4zdl0b13h
-POST http://localhost:4566/restapis/{{apiId}}/dev/_user_request_/quotes
+@API_ID=orn559hux2
+POST http://localhost:4566/restapis/{{API_ID}}/dev/_user_request_/quotes
 Content-Type: application/json
 
-{
-    "author": "Thanos",
-    "quote": "Perfectly balanced... as all things should be.",
-    "movie": "Avengers: Infinity War",
-    "year": 2018
-}
+[
+    {
+        "author": "Thanos",
+        "quote": "Perfectly balanced... as all things should be.",
+        "movie": "Avengers: Infinity War",
+        "year": 2018
+    },
+    {
+        "author": "Joker",
+        "quote": "Introduce a little anarchy, upset the established order, and everything becomes chaos.",
+        "movie": "Batman: The Dark Knight",
+        "year": 2008
+    },
+    {
+        "author": "Joker",
+        "quote": "In their last moments, people show you who they really are.",
+        "movie": "Batman: The Dark Knight",
+        "year": 2008
+    },
+    {
+        "author": "Cruella de Vil",
+        "quote": "We lose more women to marriage than war, famine, and disease.",
+        "movie": "101 Dalmatians",
+        "year": 1961
+    },
+    {
+        "author": "Ursula",
+        "quote": "Don't underestimate the importance of body language.",
+        "movie": "The Little Mermaid",
+        "year": 1989
+    }
+]
 
 ###
-POST http://localhost:4566/restapis/{{apiId}}/dev/_user_request_/quotes
-Content-Type: application/json
-
-{
-    "author": "Joker",
-    "quote": "Introduce a little anarchy, upset the established order, and everything becomes chaos.",
-    "movie": "Batman: The Dark Knight",
-    "year": 2008
-}
-
-
-###
-POST http://localhost:4566/restapis/{{apiId}}/dev/_user_request_/quotes
-Content-Type: application/json
-
-{
-    "author": "Joker",
-    "quote": "In their last moments, people show you who they really are.",
-    "movie": "Batman: The Dark Knight",
-    "year": 2008
-}
-
-
-###
-POST http://localhost:4566/restapis/{{apiId}}/dev/_user_request_/quotes
-Content-Type: application/json
-
-{
-    "author" : "Cruella de Vil",
-    "quote": "We lose more women to marriage than war, famine, and disease.",
-    "movie": "101 Dalmatians",
-    "year": 1961
-}
-###
-POST http://localhost:4566/restapis/{{apiId}}/dev/_user_request_/quotes
-Content-Type: application/json
-
-{
-    "author" : "Ursula",
-    "quote": "Don't underestimate the importance of body language.",
-    "movie": "The Little Mermaid",
-    "year": 1989
-}
-###
-GET http://localhost:4566/restapis/{{apiId}}/dev/_user_request_/quotes?author=Ursula
+GET http://localhost:4566/restapis/{{API_ID}}/dev/_user_request_/quotes?author=Joker
