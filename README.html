@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>O que voc&ecirc; vai ver nesse artigo</title>
+        <style>
+/* From extension vscode.markdown-math */
+@font-face{font-family:KaTeX_AMS;src:url(fonts/KaTeX_AMS-Regular.woff2) format("woff2"),url(fonts/KaTeX_AMS-Regular.woff) format("woff"),url(fonts/KaTeX_AMS-Regular.ttf) format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Caligraphic;src:url(fonts/KaTeX_Caligraphic-Bold.woff2) format("woff2"),url(fonts/KaTeX_Caligraphic-Bold.woff) format("woff"),url(fonts/KaTeX_Caligraphic-Bold.ttf) format("truetype");font-weight:700;font-style:normal}@font-face{font-family:KaTeX_Caligraphic;src:url(fonts/KaTeX_Caligraphic-Regular.woff2) format("woff2"),url(fonts/KaTeX_Caligraphic-Regular.woff) format("woff"),url(fonts/KaTeX_Caligraphic-Regular.ttf) format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Fraktur;src:url(fonts/KaTeX_Fraktur-Bold.woff2) format("woff2"),url(fonts/KaTeX_Fraktur-Bold.woff) format("woff"),url(fonts/KaTeX_Fraktur-Bold.ttf) format("truetype");font-weight:700;font-style:normal}@font-face{font-family:KaTeX_Fraktur;src:url(fonts/KaTeX_Fraktur-Regular.woff2) format("woff2"),url(fonts/KaTeX_Fraktur-Regular.woff) format("woff"),url(fonts/KaTeX_Fraktur-Regular.ttf) format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Main;src:url(fonts/KaTeX_Main-Bold.woff2) format("woff2"),url(fonts/KaTeX_Main-Bold.woff) format("woff"),url(fonts/KaTeX_Main-Bold.ttf) format("truetype");font-weight:700;font-style:normal}@font-face{font-family:KaTeX_Main;src:url(fonts/KaTeX_Main-BoldItalic.woff2) format("woff2"),url(fonts/KaTeX_Main-BoldItalic.woff) format("woff"),url(fonts/KaTeX_Main-BoldItalic.ttf) format("truetype");font-weight:700;font-style:italic}@font-face{font-family:KaTeX_Main;src:url(fonts/KaTeX_Main-Italic.woff2) format("woff2"),url(fonts/KaTeX_Main-Italic.woff) format("woff"),url(fonts/KaTeX_Main-Italic.ttf) format("truetype");font-weight:400;font-style:italic}@font-face{font-family:KaTeX_Main;src:url(fonts/KaTeX_Main-Regular.woff2) format("woff2"),url(fonts/KaTeX_Main-Regular.woff) format("woff"),url(fonts/KaTeX_Main-Regular.ttf) format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Math;src:url(fonts/KaTeX_Math-BoldItalic.woff2) format("woff2"),url(fonts/KaTeX_Math-BoldItalic.woff) format("woff"),url(fonts/KaTeX_Math-BoldItalic.ttf) format("truetype");font-weight:700;font-style:italic}@font-face{font-family:KaTeX_Math;src:url(fonts/KaTeX_Math-Italic.woff2) format("woff2"),url(fonts/KaTeX_Math-Italic.woff) format("woff"),url(fonts/KaTeX_Math-Italic.ttf) format("truetype");font-weight:400;font-style:italic}@font-face{font-family:"KaTeX_SansSerif";src:url(fonts/KaTeX_SansSerif-Bold.woff2) format("woff2"),url(fonts/KaTeX_SansSerif-Bold.woff) format("woff"),url(fonts/KaTeX_SansSerif-Bold.ttf) format("truetype");font-weight:700;font-style:normal}@font-face{font-family:"KaTeX_SansSerif";src:url(fonts/KaTeX_SansSerif-Italic.woff2) format("woff2"),url(fonts/KaTeX_SansSerif-Italic.woff) format("woff"),url(fonts/KaTeX_SansSerif-Italic.ttf) format("truetype");font-weight:400;font-style:italic}@font-face{font-family:"KaTeX_SansSerif";src:url(fonts/KaTeX_SansSerif-Regular.woff2) format("woff2"),url(fonts/KaTeX_SansSerif-Regular.woff) format("woff"),url(fonts/KaTeX_SansSerif-Regular.ttf) format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Script;src:url(fonts/KaTeX_Script-Regular.woff2) format("woff2"),url(fonts/KaTeX_Script-Regular.woff) format("woff"),url(fonts/KaTeX_Script-Regular.ttf) format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Size1;src:url(fonts/KaTeX_Size1-Regular.woff2) format("woff2"),url(fonts/KaTeX_Size1-Regular.woff) format("woff"),url(fonts/KaTeX_Size1-Regular.ttf) format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Size2;src:url(fonts/KaTeX_Size2-Regular.woff2) format("woff2"),url(fonts/KaTeX_Size2-Regular.woff) format("woff"),url(fonts/KaTeX_Size2-Regular.ttf) format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Size3;src:url(fonts/KaTeX_Size3-Regular.woff2) format("woff2"),url(fonts/KaTeX_Size3-Regular.woff) format("woff"),url(fonts/KaTeX_Size3-Regular.ttf) format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Size4;src:url(fonts/KaTeX_Size4-Regular.woff2) format("woff2"),url(fonts/KaTeX_Size4-Regular.woff) format("woff"),url(fonts/KaTeX_Size4-Regular.ttf) format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Typewriter;src:url(fonts/KaTeX_Typewriter-Regular.woff2) format("woff2"),url(fonts/KaTeX_Typewriter-Regular.woff) format("woff"),url(fonts/KaTeX_Typewriter-Regular.ttf) format("truetype");font-weight:400;font-style:normal}.katex{font:normal 1.21em KaTeX_Main,Times New Roman,serif;line-height:1.2;text-indent:0;text-rendering:auto;border-color:currentColor}.katex *{-ms-high-contrast-adjust:none!important}.katex .katex-version:after{content:"0.13.0"}.katex .katex-mathml{position:absolute;clip:rect(1px,1px,1px,1px);padding:0;border:0;height:1px;width:1px;overflow:hidden}.katex .katex-html>.newline{display:block}.katex .base{position:relative;white-space:nowrap;width:-webkit-min-content;width:-moz-min-content;width:min-content}.katex .base,.katex .strut{display:inline-block}.katex .textbf{font-weight:700}.katex .textit{font-style:italic}.katex .textrm{font-family:KaTeX_Main}.katex .textsf{font-family:KaTeX_SansSerif}.katex .texttt{font-family:KaTeX_Typewriter}.katex .mathnormal{font-family:KaTeX_Math;font-style:italic}.katex .mathit{font-family:KaTeX_Main;font-style:italic}.katex .mathrm{font-style:normal}.katex .mathbf{font-family:KaTeX_Main;font-weight:700}.katex .boldsymbol{font-family:KaTeX_Math;font-weight:700;font-style:italic}.katex .amsrm,.katex .mathbb,.katex .textbb{font-family:KaTeX_AMS}.katex .mathcal{font-family:KaTeX_Caligraphic}.katex .mathfrak,.katex .textfrak{font-family:KaTeX_Fraktur}.katex .mathtt{font-family:KaTeX_Typewriter}.katex .mathscr,.katex .textscr{font-family:KaTeX_Script}.katex .mathsf,.katex .textsf{font-family:KaTeX_SansSerif}.katex .mathboldsf,.katex .textboldsf{font-family:KaTeX_SansSerif;font-weight:700}.katex .mathitsf,.katex .textitsf{font-family:KaTeX_SansSerif;font-style:italic}.katex .mainrm{font-family:KaTeX_Main;font-style:normal}.katex .vlist-t{display:inline-table;table-layout:fixed;border-collapse:collapse}.katex .vlist-r{display:table-row}.katex .vlist{display:table-cell;vertical-align:bottom;position:relative}.katex .vlist>span{display:block;height:0;position:relative}.katex .vlist>span>span{display:inline-block}.katex .vlist>span>.pstrut{overflow:hidden;width:0}.katex .vlist-t2{margin-right:-2px}.katex .vlist-s{display:table-cell;vertical-align:bottom;font-size:1px;width:2px;min-width:2px}.katex .vbox{display:inline-flex;flex-direction:column;align-items:baseline}.katex .hbox{width:100%}.katex .hbox,.katex .thinbox{display:inline-flex;flex-direction:row}.katex .thinbox{width:0;max-width:0}.katex .msupsub{text-align:left}.katex .mfrac>span>span{text-align:center}.katex .mfrac .frac-line{display:inline-block;width:100%;border-bottom-style:solid}.katex .hdashline,.katex .hline,.katex .mfrac .frac-line,.katex .overline .overline-line,.katex .rule,.katex .underline .underline-line{min-height:1px}.katex .mspace{display:inline-block}.katex .clap,.katex .llap,.katex .rlap{width:0;position:relative}.katex .clap>.inner,.katex .llap>.inner,.katex .rlap>.inner{position:absolute}.katex .clap>.fix,.katex .llap>.fix,.katex .rlap>.fix{display:inline-block}.katex .llap>.inner{right:0}.katex .clap>.inner,.katex .rlap>.inner{left:0}.katex .clap>.inner>span{margin-left:-50%;margin-right:50%}.katex .rule{display:inline-block;border:0 solid;position:relative}.katex .hline,.katex .overline .overline-line,.katex .underline .underline-line{display:inline-block;width:100%;border-bottom-style:solid}.katex .hdashline{display:inline-block;width:100%;border-bottom-style:dashed}.katex .sqrt>.root{margin-left:.27777778em;margin-right:-.55555556em}.katex .fontsize-ensurer.reset-size1.size1,.katex .sizing.reset-size1.size1{font-size:1em}.katex .fontsize-ensurer.reset-size1.size2,.katex .sizing.reset-size1.size2{font-size:1.2em}.katex .fontsize-ensurer.reset-size1.size3,.katex .sizing.reset-size1.size3{font-size:1.4em}.katex .fontsize-ensurer.reset-size1.size4,.katex .sizing.reset-size1.size4{font-size:1.6em}.katex .fontsize-ensurer.reset-size1.size5,.katex .sizing.reset-size1.size5{font-size:1.8em}.katex .fontsize-ensurer.reset-size1.size6,.katex .sizing.reset-size1.size6{font-size:2em}.katex .fontsize-ensurer.reset-size1.size7,.katex .sizing.reset-size1.size7{font-size:2.4em}.katex .fontsize-ensurer.reset-size1.size8,.katex .sizing.reset-size1.size8{font-size:2.88em}.katex .fontsize-ensurer.reset-size1.size9,.katex .sizing.reset-size1.size9{font-size:3.456em}.katex .fontsize-ensurer.reset-size1.size10,.katex .sizing.reset-size1.size10{font-size:4.148em}.katex .fontsize-ensurer.reset-size1.size11,.katex .sizing.reset-size1.size11{font-size:4.976em}.katex .fontsize-ensurer.reset-size2.size1,.katex .sizing.reset-size2.size1{font-size:.83333333em}.katex .fontsize-ensurer.reset-size2.size2,.katex .sizing.reset-size2.size2{font-size:1em}.katex .fontsize-ensurer.reset-size2.size3,.katex .sizing.reset-size2.size3{font-size:1.16666667em}.katex .fontsize-ensurer.reset-size2.size4,.katex .sizing.reset-size2.size4{font-size:1.33333333em}.katex .fontsize-ensurer.reset-size2.size5,.katex .sizing.reset-size2.size5{font-size:1.5em}.katex .fontsize-ensurer.reset-size2.size6,.katex .sizing.reset-size2.size6{font-size:1.66666667em}.katex .fontsize-ensurer.reset-size2.size7,.katex .sizing.reset-size2.size7{font-size:2em}.katex .fontsize-ensurer.reset-size2.size8,.katex .sizing.reset-size2.size8{font-size:2.4em}.katex .fontsize-ensurer.reset-size2.size9,.katex .sizing.reset-size2.size9{font-size:2.88em}.katex .fontsize-ensurer.reset-size2.size10,.katex .sizing.reset-size2.size10{font-size:3.45666667em}.katex .fontsize-ensurer.reset-size2.size11,.katex .sizing.reset-size2.size11{font-size:4.14666667em}.katex .fontsize-ensurer.reset-size3.size1,.katex .sizing.reset-size3.size1{font-size:.71428571em}.katex .fontsize-ensurer.reset-size3.size2,.katex .sizing.reset-size3.size2{font-size:.85714286em}.katex .fontsize-ensurer.reset-size3.size3,.katex .sizing.reset-size3.size3{font-size:1em}.katex .fontsize-ensurer.reset-size3.size4,.katex .sizing.reset-size3.size4{font-size:1.14285714em}.katex .fontsize-ensurer.reset-size3.size5,.katex .sizing.reset-size3.size5{font-size:1.28571429em}.katex .fontsize-ensurer.reset-size3.size6,.katex .sizing.reset-size3.size6{font-size:1.42857143em}.katex .fontsize-ensurer.reset-size3.size7,.katex .sizing.reset-size3.size7{font-size:1.71428571em}.katex .fontsize-ensurer.reset-size3.size8,.katex .sizing.reset-size3.size8{font-size:2.05714286em}.katex .fontsize-ensurer.reset-size3.size9,.katex .sizing.reset-size3.size9{font-size:2.46857143em}.katex .fontsize-ensurer.reset-size3.size10,.katex .sizing.reset-size3.size10{font-size:2.96285714em}.katex .fontsize-ensurer.reset-size3.size11,.katex .sizing.reset-size3.size11{font-size:3.55428571em}.katex .fontsize-ensurer.reset-size4.size1,.katex .sizing.reset-size4.size1{font-size:.625em}.katex .fontsize-ensurer.reset-size4.size2,.katex .sizing.reset-size4.size2{font-size:.75em}.katex .fontsize-ensurer.reset-size4.size3,.katex .sizing.reset-size4.size3{font-size:.875em}.katex .fontsize-ensurer.reset-size4.size4,.katex .sizing.reset-size4.size4{font-size:1em}.katex .fontsize-ensurer.reset-size4.size5,.katex .sizing.reset-size4.size5{font-size:1.125em}.katex .fontsize-ensurer.reset-size4.size6,.katex .sizing.reset-size4.size6{font-size:1.25em}.katex .fontsize-ensurer.reset-size4.size7,.katex .sizing.reset-size4.size7{font-size:1.5em}.katex .fontsize-ensurer.reset-size4.size8,.katex .sizing.reset-size4.size8{font-size:1.8em}.katex .fontsize-ensurer.reset-size4.size9,.katex .sizing.reset-size4.size9{font-size:2.16em}.katex .fontsize-ensurer.reset-size4.size10,.katex .sizing.reset-size4.size10{font-size:2.5925em}.katex .fontsize-ensurer.reset-size4.size11,.katex .sizing.reset-size4.size11{font-size:3.11em}.katex .fontsize-ensurer.reset-size5.size1,.katex .sizing.reset-size5.size1{font-size:.55555556em}.katex .fontsize-ensurer.reset-size5.size2,.katex .sizing.reset-size5.size2{font-size:.66666667em}.katex .fontsize-ensurer.reset-size5.size3,.katex .sizing.reset-size5.size3{font-size:.77777778em}.katex .fontsize-ensurer.reset-size5.size4,.katex .sizing.reset-size5.size4{font-size:.88888889em}.katex .fontsize-ensurer.reset-size5.size5,.katex .sizing.reset-size5.size5{font-size:1em}.katex .fontsize-ensurer.reset-size5.size6,.katex .sizing.reset-size5.size6{font-size:1.11111111em}.katex .fontsize-ensurer.reset-size5.size7,.katex .sizing.reset-size5.size7{font-size:1.33333333em}.katex .fontsize-ensurer.reset-size5.size8,.katex .sizing.reset-size5.size8{font-size:1.6em}.katex .fontsize-ensurer.reset-size5.size9,.katex .sizing.reset-size5.size9{font-size:1.92em}.katex .fontsize-ensurer.reset-size5.size10,.katex .sizing.reset-size5.size10{font-size:2.30444444em}.katex .fontsize-ensurer.reset-size5.size11,.katex .sizing.reset-size5.size11{font-size:2.76444444em}.katex .fontsize-ensurer.reset-size6.size1,.katex .sizing.reset-size6.size1{font-size:.5em}.katex .fontsize-ensurer.reset-size6.size2,.katex .sizing.reset-size6.size2{font-size:.6em}.katex .fontsize-ensurer.reset-size6.size3,.katex .sizing.reset-size6.size3{font-size:.7em}.katex .fontsize-ensurer.reset-size6.size4,.katex .sizing.reset-size6.size4{font-size:.8em}.katex .fontsize-ensurer.reset-size6.size5,.katex .sizing.reset-size6.size5{font-size:.9em}.katex .fontsize-ensurer.reset-size6.size6,.katex .sizing.reset-size6.size6{font-size:1em}.katex .fontsize-ensurer.reset-size6.size7,.katex .sizing.reset-size6.size7{font-size:1.2em}.katex .fontsize-ensurer.reset-size6.size8,.katex .sizing.reset-size6.size8{font-size:1.44em}.katex .fontsize-ensurer.reset-size6.size9,.katex .sizing.reset-size6.size9{font-size:1.728em}.katex .fontsize-ensurer.reset-size6.size10,.katex .sizing.reset-size6.size10{font-size:2.074em}.katex .fontsize-ensurer.reset-size6.size11,.katex .sizing.reset-size6.size11{font-size:2.488em}.katex .fontsize-ensurer.reset-size7.size1,.katex .sizing.reset-size7.size1{font-size:.41666667em}.katex .fontsize-ensurer.reset-size7.size2,.katex .sizing.reset-size7.size2{font-size:.5em}.katex .fontsize-ensurer.reset-size7.size3,.katex .sizing.reset-size7.size3{font-size:.58333333em}.katex .fontsize-ensurer.reset-size7.size4,.katex .sizing.reset-size7.size4{font-size:.66666667em}.katex .fontsize-ensurer.reset-size7.size5,.katex .sizing.reset-size7.size5{font-size:.75em}.katex .fontsize-ensurer.reset-size7.size6,.katex .sizing.reset-size7.size6{font-size:.83333333em}.katex .fontsize-ensurer.reset-size7.size7,.katex .sizing.reset-size7.size7{font-size:1em}.katex .fontsize-ensurer.reset-size7.size8,.katex .sizing.reset-size7.size8{font-size:1.2em}.katex .fontsize-ensurer.reset-size7.size9,.katex .sizing.reset-size7.size9{font-size:1.44em}.katex .fontsize-ensurer.reset-size7.size10,.katex .sizing.reset-size7.size10{font-size:1.72833333em}.katex .fontsize-ensurer.reset-size7.size11,.katex .sizing.reset-size7.size11{font-size:2.07333333em}.katex .fontsize-ensurer.reset-size8.size1,.katex .sizing.reset-size8.size1{font-size:.34722222em}.katex .fontsize-ensurer.reset-size8.size2,.katex .sizing.reset-size8.size2{font-size:.41666667em}.katex .fontsize-ensurer.reset-size8.size3,.katex .sizing.reset-size8.size3{font-size:.48611111em}.katex .fontsize-ensurer.reset-size8.size4,.katex .sizing.reset-size8.size4{font-size:.55555556em}.katex .fontsize-ensurer.reset-size8.size5,.katex .sizing.reset-size8.size5{font-size:.625em}.katex .fontsize-ensurer.reset-size8.size6,.katex .sizing.reset-size8.size6{font-size:.69444444em}.katex .fontsize-ensurer.reset-size8.size7,.katex .sizing.reset-size8.size7{font-size:.83333333em}.katex .fontsize-ensurer.reset-size8.size8,.katex .sizing.reset-size8.size8{font-size:1em}.katex .fontsize-ensurer.reset-size8.size9,.katex .sizing.reset-size8.size9{font-size:1.2em}.katex .fontsize-ensurer.reset-size8.size10,.katex .sizing.reset-size8.size10{font-size:1.44027778em}.katex .fontsize-ensurer.reset-size8.size11,.katex .sizing.reset-size8.size11{font-size:1.72777778em}.katex .fontsize-ensurer.reset-size9.size1,.katex .sizing.reset-size9.size1{font-size:.28935185em}.katex .fontsize-ensurer.reset-size9.size2,.katex .sizing.reset-size9.size2{font-size:.34722222em}.katex .fontsize-ensurer.reset-size9.size3,.katex .sizing.reset-size9.size3{font-size:.40509259em}.katex .fontsize-ensurer.reset-size9.size4,.katex .sizing.reset-size9.size4{font-size:.46296296em}.katex .fontsize-ensurer.reset-size9.size5,.katex .sizing.reset-size9.size5{font-size:.52083333em}.katex .fontsize-ensurer.reset-size9.size6,.katex .sizing.reset-size9.size6{font-size:.5787037em}.katex .fontsize-ensurer.reset-size9.size7,.katex .sizing.reset-size9.size7{font-size:.69444444em}.katex .fontsize-ensurer.reset-size9.size8,.katex .sizing.reset-size9.size8{font-size:.83333333em}.katex .fontsize-ensurer.reset-size9.size9,.katex .sizing.reset-size9.size9{font-size:1em}.katex .fontsize-ensurer.reset-size9.size10,.katex .sizing.reset-size9.size10{font-size:1.20023148em}.katex .fontsize-ensurer.reset-size9.size11,.katex .sizing.reset-size9.size11{font-size:1.43981481em}.katex .fontsize-ensurer.reset-size10.size1,.katex .sizing.reset-size10.size1{font-size:.24108004em}.katex .fontsize-ensurer.reset-size10.size2,.katex .sizing.reset-size10.size2{font-size:.28929605em}.katex .fontsize-ensurer.reset-size10.size3,.katex .sizing.reset-size10.size3{font-size:.33751205em}.katex .fontsize-ensurer.reset-size10.size4,.katex .sizing.reset-size10.size4{font-size:.38572806em}.katex .fontsize-ensurer.reset-size10.size5,.katex .sizing.reset-size10.size5{font-size:.43394407em}.katex .fontsize-ensurer.reset-size10.size6,.katex .sizing.reset-size10.size6{font-size:.48216008em}.katex .fontsize-ensurer.reset-size10.size7,.katex .sizing.reset-size10.size7{font-size:.57859209em}.katex .fontsize-ensurer.reset-size10.size8,.katex .sizing.reset-size10.size8{font-size:.69431051em}.katex .fontsize-ensurer.reset-size10.size9,.katex .sizing.reset-size10.size9{font-size:.83317261em}.katex .fontsize-ensurer.reset-size10.size10,.katex .sizing.reset-size10.size10{font-size:1em}.katex .fontsize-ensurer.reset-size10.size11,.katex .sizing.reset-size10.size11{font-size:1.19961427em}.katex .fontsize-ensurer.reset-size11.size1,.katex .sizing.reset-size11.size1{font-size:.20096463em}.katex .fontsize-ensurer.reset-size11.size2,.katex .sizing.reset-size11.size2{font-size:.24115756em}.katex .fontsize-ensurer.reset-size11.size3,.katex .sizing.reset-size11.size3{font-size:.28135048em}.katex .fontsize-ensurer.reset-size11.size4,.katex .sizing.reset-size11.size4{font-size:.32154341em}.katex .fontsize-ensurer.reset-size11.size5,.katex .sizing.reset-size11.size5{font-size:.36173633em}.katex .fontsize-ensurer.reset-size11.size6,.katex .sizing.reset-size11.size6{font-size:.40192926em}.katex .fontsize-ensurer.reset-size11.size7,.katex .sizing.reset-size11.size7{font-size:.48231511em}.katex .fontsize-ensurer.reset-size11.size8,.katex .sizing.reset-size11.size8{font-size:.57877814em}.katex .fontsize-ensurer.reset-size11.size9,.katex .sizing.reset-size11.size9{font-size:.69453376em}.katex .fontsize-ensurer.reset-size11.size10,.katex .sizing.reset-size11.size10{font-size:.83360129em}.katex .fontsize-ensurer.reset-size11.size11,.katex .sizing.reset-size11.size11{font-size:1em}.katex .delimsizing.size1{font-family:KaTeX_Size1}.katex .delimsizing.size2{font-family:KaTeX_Size2}.katex .delimsizing.size3{font-family:KaTeX_Size3}.katex .delimsizing.size4{font-family:KaTeX_Size4}.katex .delimsizing.mult .delim-size1>span{font-family:KaTeX_Size1}.katex .delimsizing.mult .delim-size4>span{font-family:KaTeX_Size4}.katex .nulldelimiter{display:inline-block;width:.12em}.katex .delimcenter,.katex .op-symbol{position:relative}.katex .op-symbol.small-op{font-family:KaTeX_Size1}.katex .op-symbol.large-op{font-family:KaTeX_Size2}.katex .accent>.vlist-t,.katex .op-limits>.vlist-t{text-align:center}.katex .accent .accent-body{position:relative}.katex .accent .accent-body:not(.accent-full){width:0}.katex .overlay{display:block}.katex .mtable .vertical-separator{display:inline-block;min-width:1px}.katex .mtable .arraycolsep{display:inline-block}.katex .mtable .col-align-c>.vlist-t{text-align:center}.katex .mtable .col-align-l>.vlist-t{text-align:left}.katex .mtable .col-align-r>.vlist-t{text-align:right}.katex .svg-align{text-align:left}.katex svg{display:block;position:absolute;width:100%;height:inherit;fill:currentColor;stroke:currentColor;fill-rule:nonzero;fill-opacity:1;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1}.katex svg path{stroke:none}.katex img{border-style:none;min-width:0;min-height:0;max-width:none;max-height:none}.katex .stretchy{width:100%;display:block;position:relative;overflow:hidden}.katex .stretchy:after,.katex .stretchy:before{content:""}.katex .hide-tail{width:100%;position:relative;overflow:hidden}.katex .halfarrow-left{position:absolute;left:0;width:50.2%;overflow:hidden}.katex .halfarrow-right{position:absolute;right:0;width:50.2%;overflow:hidden}.katex .brace-left{position:absolute;left:0;width:25.1%;overflow:hidden}.katex .brace-center{position:absolute;left:25%;width:50%;overflow:hidden}.katex .brace-right{position:absolute;right:0;width:25.1%;overflow:hidden}.katex .x-arrow-pad{padding:0 .5em}.katex .cd-arrow-pad{padding:0 .55556em 0 .27778em}.katex .mover,.katex .munder,.katex .x-arrow{text-align:center}.katex .boxpad{padding:0 .3em}.katex .fbox,.katex .fcolorbox{box-sizing:border-box;border:.04em solid}.katex .cancel-pad{padding:0 .2em}.katex .cancel-lap{margin-left:-.2em;margin-right:-.2em}.katex .sout{border-bottom-style:solid;border-bottom-width:.08em}.katex .angl{box-sizing:border-content;border-top:.049em solid;border-right:.049em solid;margin-right:.03889em}.katex .anglpad{padding:0 .03889em}.katex .eqn-num:before{counter-increment:katexEqnNo;content:"(" counter(katexEqnNo) ")"}.katex .mml-eqn-num:before{counter-increment:mmlEqnNo;content:"(" counter(mmlEqnNo) ")"}.katex .mtr-glue{width:50%}.katex .cd-vert-arrow{display:inline-block;position:relative}.katex .cd-label-left{display:inline-block;position:absolute;right:calc(50% + .3em);text-align:left}.katex .cd-label-right{display:inline-block;position:absolute;left:calc(50% + .3em);text-align:right}.katex-display{display:block;margin:1em 0;text-align:center}.katex-display>.katex{display:block;text-align:center;white-space:nowrap}.katex-display>.katex>.katex-html{display:block;position:relative}.katex-display>.katex>.katex-html>.tag{position:absolute;right:0}.katex-display.leqno>.katex>.katex-html>.tag{left:0;right:auto}.katex-display.fleqn>.katex{text-align:left;padding-left:2em}body{counter-reset:katexEqnNo mmlEqnNo}
+
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.katex-error {
+	color: var(--vscode-editorError-foreground);
+}
+
+</style>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css" integrity="sha384-yFRtMMDnQtDRO8rLpMIKrtPCD5jdktao2TV19YiZYWMDkUR5GQZR/NOVTdquEx1j" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        
+        <script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+        
+    </head>
+    <body class="vscode-body vscode-light">
+        <h2 id="o-que-você-vai-ver-nesse-artigo">O que você vai ver nesse artigo</h2>
+<ol>
+<li>AWS services: apigateway, lambda, dynamodb</li>
+<li>Localstack Community</li>
+<li>NodeJs</li>
+<li>Docker compose</li>
+<li>Terraform</li>
+</ol>
+<h2 id="o-que-vamos-fazer">O que vamos fazer</h2>
+<h3 id="definição-da-nossa-poc">Definição da nossa POC</h3>
+<p><img src="file:////home/leandro/Workspace/Repositories/localstack-terraform-tutorial/localstack-tutorial.png" alt="Diagrama do projeto"></p>
+<p>O objetivo desse artigo é exemplificar o uso da LocalStack e o que é necessário para rodar um projeto simples. Para além do que usamos aqui, a ferramenta possui inúmeros outros recursos, bem como outros serviços AWS, que não abordarei.</p>
+<h3 id="repositório">Repositório</h3>
+<p>Todo esse projeto e os códigos completos estão disponíveis no seguinte <a href="https://github.com/leandrostl/localstack-terraform-tutorial">repositório</a>. Este texto contem alguns
+pedaços de código, mas que podem não estar completos.</p>
+<h3 id="tldr"><em>TL;DR</em></h3>
+<h4 id="preparando-o-ambiente">Preparando o ambiente:</h4>
+<ol>
+<li>Clone o projeto do <a href="https://github.com/leandrostl/localstack-terraform-tutorial">repositório</a>;</li>
+<li>Instale o docker a  partir da <a href="https://docs.docker.com/engine/install/ubuntu/">documentação</a>;</li>
+<li>Instale o docker-compose:
+<ol>
+<li><code>sudo curl -L &quot;https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-$(uname -s)-$(uname -m)&quot; -o /usr/local/bin/docker-compose</code></li>
+<li><code>sudo chmod +x /usr/local/bin/docker-compose</code></li>
+</ol>
+</li>
+<li>Instale o Python seguindo a <a href="https://python.org.br/instalacao-linux/">documentação oficial</a>;</li>
+<li>Instale o AWS CLI: <a href="https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html">página oficial</a>;</li>
+<li>Instale o Localstack: <code>sudo python3 -m pip install localstack</code></li>
+<li>Instale o awscli-local: <code>pip install awscli-local</code></li>
+<li>Siga a <a href="https://www.terraform.io/downloads">orientação oficial</a> para instalar o Terraform;</li>
+<li>NodeJs:
+<ol>
+<li>NPM - <a href="https://github.com/nvm-sh/nvm#install--update-script">repositório oficial</a></li>
+<li>node - <a href="https://github.com/nvm-sh/nvm#usage">comando descrito no repositório</a></li>
+</ol>
+</li>
+</ol>
+<h4 id="rodando-a-aplicação">Rodando a aplicação:</h4>
+<ol>
+<li>No diretório raiz execute o comando: <code>docker-compose up -d</code></li>
+<li>No diretório terraform execute:
+<ol>
+<li><code>terraform init</code></li>
+<li>`terraform apply --auto-approve</li>
+</ol>
+</li>
+<li>Para testar:
+<ol>
+<li>Instale a extensão <a href="https://marketplace.visualstudio.com/items?itemName=humao.rest-client">REST Client</a> para o VSCode;</li>
+<li>Abra o arquivo <code>test.http</code></li>
+<li>Altere a variável <code>API_ID</code> para o id informado na saída do terraform;</li>
+<li>Clique em send request para envio da request de POST;</li>
+<li>Veririque os serviços e logs da sua aplicação em <a href="https://app.localstack.cloud/;">https://app.localstack.cloud/;</a></li>
+<li>Verifique, após alguns segundos, se a frase está salva na base de dados, enviando a request de GET com o seu vilão favorito.</li>
+</ol>
+</li>
+</ol>
+<h4 id="matando-a-aplicação">Matando a aplicação:</h4>
+<ol>
+<li>Use o comando <code>terraform destroy --auto-approve</code> a partir do diretório terraform para remover os serviços AWS</li>
+<li>Do diretório raiz, utilize o comando <code>docker-compose down -v</code> para apagar todos os recursos criados através do docker-compose.</li>
+</ol>
+<h3 id="configurando-o-ambiente"><strong>Configurando o ambiente:</strong></h3>
+<p>Estou usando uma máquina rodando ubuntu:</p>
+<pre><code class="language-bash"><div>    leandro@leandro-desktop ~&gt; lsb_release -a
+    No LSB modules are available.
+    Distributor ID:	Ubuntu
+    Description:	Ubuntu 20.04.3 LTS
+    Release:	20.04
+    Codename:	focal
+</div></code></pre>
+<h4 id="docker"><strong>Docker</strong></h4>
+<p>Vamos começar instalando o docker. Segui precisamente a <a href="https://docs.docker.com/engine/install/ubuntu/">documentação</a> da página oficial para instalação no ubuntu. A versão que tenho instalada nesse momento é a:</p>
+<pre><code class="language-bash"><div>    leandro@leandro-desktop ~&gt; docker -v
+    Docker version 20.10.12, build e91ed57
+</div></code></pre>
+<h4 id="docker-compose"><strong>Docker Compose</strong></h4>
+<p>Docker compose foi um pouco mais complicado para instalar. A página do docker aponta para um <em>compose</em> numa versão bem antiga. Preferi entrar no <a href="https://github.com/docker/compose/releases">repositório do github</a> para verificar e alterar o endereço no comando fornecido na página do Docker. Desta forma segui os passos:</p>
+<ol>
+<li><code>sudo curl -L &quot;https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-$(uname -s)-$(uname -m)&quot; -o /usr/local/bin/docker-compose</code></li>
+<li><code>sudo chmod +x /usr/local/bin/docker-compose</code></li>
+</ol>
+<p>Nesse momento a versão que tenho do docker-compose instalada é:</p>
+<pre><code class="language-bash"><div>    leandro@leandro-desktop ~&gt; docker-compose -v
+    Docker Compose version v2.2.3
+</div></code></pre>
+<h4 id="python"><strong>Python</strong></h4>
+<p>A <em>localstack</em> faz uso do Python. Assim precisei instalar o compilador da linguagem e o gerenciador de pacotes. Segui a <a href="https://python.org.br/instalacao-linux/">documentação oficial</a>. Instalei as seguintes versões:</p>
+<pre><code class="language-bash"><div>   leandro@leandro-desktop:~$ python3 --version
+   Python 3.8.10
+   leandro@leandro-desktop:~$ pip --version
+   pip 20.0.2 from /usr/lib/python3/dist-packages/pip (python 3.8)
+</div></code></pre>
+<h4 id="aws-cli"><strong>AWS CLI</strong></h4>
+<p>Para rodar comandos no terminal para acesso aos dados de serviços da AWS, mesmo que na localstack, é necessário usar o <em>AWS CLI</em>. Para sua instalação, segui o passo a passo informado na <a href="https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html">página oficial</a>. Verificando a versão, obtive:</p>
+<pre><code class="language-bash"><div>leandro@leandro-desktop ~/W/R/localstack-terraform-tutorial (main)&gt; aws --version
+aws-cli/2.4.11 Python/3.8.8 Linux/5.4.0-94-generic exe/x86_64.ubuntu.20 prompt/off
+</div></code></pre>
+<h4 id="localstack"><strong>Localstack</strong></h4>
+<p>Para instalar o localstack eu tentei seguir o repositório oficial que dizia que não deveria ser instalado usando <em>sudo</em>, mas não funcionou. Instalei com o seguinte comando:</p>
+<pre><code class="language-bash"><div>   sudo python3 -m pip install localstack
+</div></code></pre>
+<p>e a versão que tenho instalada é:</p>
+<pre><code class="language-bash"><div>leandro@leandro-desktop:~$ localstack --version
+0.13.3.1
+</div></code></pre>
+<p>Também instalei o awscli-local com o comando <code>pip install awscli-local</code>.</p>
+<h4 id="terraform"><strong>Terraform</strong></h4>
+<p>O Terraform é uma ferramenta de código de infraestrutura ou, <em>infrastructure as a code</em>. É open-source e mantido pela HashCorp. Para instalar, segui a <a href="https://www.terraform.io/downloads">orientação oficial</a>. Depois de instalado, testei a versão para:</p>
+<pre><code class="language-bash"><div>leandro@leandro-desktop:~$ terraform -v
+Terraform v1.1.3
+on linux_amd64
+</div></code></pre>
+<h4 id="nodejs"><strong>NodeJs</strong></h4>
+<p>A escolha de <em>NodeJs</em> para esse tutorial foi bastante concorrida com <em>Python</em>. Mas pesou o conhecimento e a reutilização do <em>JavaScrip</em> em frontends. Aqui vai uma <a href="https://dashbird.io/blog/most-efficient-lambda-language/">análise bem interessante</a> sobre as possíveis linguagens para desenvolvimento para <em>AWS Lambdas</em>.</p>
+<p>Para instalar o Node no meu ambiente eu optei por usar o <a href="https://nodejs.org/en/download/package-manager/#nvm">NVM, gerenciador de versão do node</a>. Esse gerenciador pode ser baixado do <a href="https://github.com/nvm-sh/nvm#install--update-script">repositório oficial</a>. Depois de instalado o NVM, basta seguir o <a href="https://github.com/nvm-sh/nvm#usage">comando descrito no repositório</a>.</p>
+<p>Com isso a versão do noje na minha máquina ficou:</p>
+<pre><code class="language-bash"><div>leandro@leandro-desktop:~$ node -v
+v16.13.2
+leandro@leandro-desktop:~$ npm -v
+8.1.2
+</div></code></pre>
+<h2 id="aws-cloud">AWS Cloud</h2>
+<p>Escolhi abordar os seguintes serviços da AWS:</p>
+<ul>
+<li><a href="https://docs.aws.amazon.com/cli/latest/reference/apigateway/index.html">API Gateway</a>: Permite criar endpoints e associa-los a um backend.</li>
+<li><a href="https://awscli.amazonaws.com/v2/documentation/api/latest/reference/cloudwatch/index.html?highlight=cloudwatch">Cloudwatch</a>: Permite monitorar a aplicação com alarmes e logs.</li>
+<li><a href="https://awscli.amazonaws.com/v2/documentation/api/latest/reference/lambda/index.html">Lambda</a>: Permite executar uma função sem a necessidade de provisionar ou gerenciar um servidor.</li>
+<li><a href="https://awscli.amazonaws.com/v2/documentation/api/latest/reference/dynamodb/index.html">DynamoDB</a>: Banco de dados não relacional, <em>NoSQL</em>, da AWS.</li>
+<li><a href="https://awscli.amazonaws.com/v2/documentation/api/latest/reference/sqs/index.html">SQS - Simple Queue Service</a>: Como o nome bem informa, é um serviço de filas de mensagens.</li>
+</ul>
+<p>A escolhas são baseadas em necessidades pessoais e naquilo que a localstack oferece gratuitamente.</p>
+<h2 id="localstack-1">Localstack</h2>
+<p>Para iniciar nosso projeto, é necessário subir a localstack em um container com as configurações adequadas para o ele. Para isso usei o docker compose e criei um script seguindo a <a href="https://docs.localstack.cloud/get-started/#docker-compose">página oficial</a>. Além disso, busquei compreender e alterar alguns pontos, conforme a <a href="https://docs.localstack.cloud/localstack/configuration/">documentação de configuração</a>. Com isso, meu <code>docker-compose</code> ficou assim:</p>
+<pre><code class="language-yaml"><div><span class="hljs-attr">version:</span> <span class="hljs-string">&quot;3.8&quot;</span>
+
+<span class="hljs-attr">services:</span>
+  <span class="hljs-attr">localstack:</span>
+    <span class="hljs-comment"># Determino o nome do container principal da aplicação.</span>
+    <span class="hljs-attr">container_name:</span> <span class="hljs-string">${LOCALSTACK_DOCKER_NAME-localstack-terraform-tutorial}</span>
+    <span class="hljs-attr">image:</span> <span class="hljs-string">localstack/localstack</span>
+    <span class="hljs-attr">network_mode:</span> <span class="hljs-string">bridge</span>
+    <span class="hljs-attr">ports:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;127.0.0.1:4566:4566&quot;</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;127.0.0.1:4571:4571&quot;</span>
+    <span class="hljs-attr">environment:</span>
+      <span class="hljs-comment"># Como eu resolvi trocar o nome do container principal eu preciso informar em uma</span>
+      <span class="hljs-comment"># variável de ambiente.</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">MAIN_CONTAINER_NAME=${LOCALSTACK_DOCKER_NAME-localstack-terraform-tutorial}</span>
+      <span class="hljs-comment"># Informo os serviços da AWS que desejo usar.</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">SERVICES=${SERVICES-dynamodb,lambda,apigateway,sqs,cloudwatch}</span>
+      <span class="hljs-comment"># Diretório para salvar dados localmente.</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">DATA_DIR=${DATA_DIR-tmp/localstack/data}</span>
+      <span class="hljs-comment"># Como nossas funções lambda serão executadas. Nesse caso escolho o padrão</span>
+      <span class="hljs-comment"># rodar as funções dentro de containers para cada uma.</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">LAMBDA_EXECUTOR=${LAMBDA_EXECUTOR-docker}</span>
+      <span class="hljs-comment"># Esse parâmetro diz respeito a como a função será passada para o container. </span>
+      <span class="hljs-comment"># Se ela será montada no container ou será copiada. Nesse caso, escolhi copiar</span>
+      <span class="hljs-comment"># todo o arquivo zip para dentro do container.</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">LAMBDA_REMOTE_DOCKER=true</span>
+    <span class="hljs-attr">volumes:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;${TMPDIR:-/tmp}/localstack:/tmp/localstack&quot;</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;/var/run/docker.sock:/var/run/docker.sock&quot;</span>
+
+</div></code></pre>
+<p>Para rodar o docker-compose, utilizei o comando <code>docker-compose up</code>, ele vai subir todo o ambiente. Se quiser continuar a usar o mesmo terminal para outras coisas, adicione o <code>-d</code> de <em>detatch</em>. Para parar se desfazer de todo o ambiente, basta rodar o <code>docker-compose down -v</code>. O <code>-v</code> informa que você também quer que os volumes criados sejam excluídos, liberando todos os recursos do computador.</p>
+<p>Uma vez em execução, é possível verificar se está tudo funcionando corretamente através da url <a href="http://localhost:4566/health">http://localhost:4566/health</a> e do <a href="https://app.localstack.cloud/">dashboard</a>.</p>
+<h2 id="terraform-1">Terraform</h2>
+<p>Agora vamos prover os serviços e suas configurações através do Terraform, especificando os recursos em arquivos <code>.tf</code> que coloquei na pasta <code>terraform</code>.
+Seguindo a <a href="https://docs.localstack.cloud/integrations/terraform/">documentação do localstack</a>, primeiro declaramos o <code>provider &quot;aws&quot;</code>:</p>
+<pre><code class="language-hcl"><code><div>provider &quot;aws&quot; {
+
+  access_key = &quot;test&quot;
+  secret_key = &quot;test&quot;
+  region     = &quot;us-east-1&quot;
+  skip_credentials_validation = true
+  skip_metadata_api_check     = true
+  skip_requesting_account_id  = true
+
+  endpoints {
+    apigateway     = var.defaut_endpoint
+    cloudwatch     = var.defaut_endpoint
+    dynamodb       = var.defaut_endpoint
+    iam            = var.defaut_endpoint
+    lambda         = var.defaut_endpoint
+    sqs            = var.defaut_endpoint
+  }
+}
+</div></code></code></pre>
+<p>Observe que é necessário apontar os serviços da aws para o LocalStack. Aqui, eu preferi criar uma variável <code>default_endpoint</code> para manter o endereço:</p>
+<pre><code class="language-hcl"><code><div>variable &quot;defaut_endpoint&quot; {
+  description = &quot;Endpoint padrão para os serviços AWS local.&quot;
+  default = &quot;http://localhost:4566&quot;
+  type = string
+} 
+</div></code></code></pre>
+<h4 id="api"><strong>API</strong></h4>
+<p>A declaração da api, o recurso quotes e os métodos são bem fáceis de compreender. E tem duas formas de se fazer isso. A primeira, é declarar blocos para cada api, recurso, integração, método:</p>
+<pre><code class="language-hcl"><code><div># Declarando nossa api para acesso de frases e os métodos
+resource &quot;aws_api_gateway_rest_api&quot; &quot;quotes&quot; {
+  name        = &quot;Quotes&quot;
+  description = &quot;Api para consumo e envio de frases para a aplicação.&quot;
+}
+
+resource &quot;aws_api_gateway_resource&quot; &quot;quotes&quot; {
+  rest_api_id = aws_api_gateway_rest_api.quotes.id
+  parent_id   = aws_api_gateway_rest_api.quotes.root_resource_id
+  path_part   = &quot;quotes&quot;
+}
+
+resource &quot;aws_api_gateway_method&quot; &quot;get_quotes&quot; {
+  rest_api_id   = aws_api_gateway_rest_api.quotes.id
+  resource_id   = aws_api_gateway_resource.quotes.id
+  http_method   = &quot;GET&quot;
+  authorization = &quot;NONE&quot;
+}
+
+resource &quot;aws_api_gateway_method&quot; &quot;post_quote&quot; {
+  rest_api_id   = aws_api_gateway_rest_api.quotes.id
+  resource_id   = aws_api_gateway_resource.quotes.id
+  http_method   = &quot;POST&quot;
+  authorization = &quot;NONE&quot;
+}
+
+resource &quot;aws_api_gateway_integration&quot; &quot;quote_receiver&quot; {
+  rest_api_id             = aws_api_gateway_rest_api.quotes.id
+  resource_id             = aws_api_gateway_resource.quotes.id
+  http_method             = aws_api_gateway_method.post_quote.http_method
+  integration_http_method = &quot;POST&quot;
+  type                    = &quot;AWS_PROXY&quot;
+  uri                     = aws_lambda_function.quote_receiver.invoke_arn
+}
+
+resource &quot;aws_api_gateway_deployment&quot; &quot;quotes&quot; {
+  depends_on = [
+    aws_api_gateway_integration.quote_receiver,
+  ]
+
+  rest_api_id = aws_api_gateway_rest_api.quotes.id
+  stage_name  = &quot;dev&quot;
+}
+</div></code></code></pre>
+<p>Uma forma mais interessante de fazer isso é usando o <a href="https://spec.openapis.org/oas/v3.1.0">OpenAPI</a> para declarar nossa api. Com isso, o nosso arquivo <code>rest-api.tf</code> fica bem mais simples:</p>
+<pre><code class="language-hcl"><code><div>resource &quot;aws_api_gateway_rest_api&quot; &quot;quotes&quot; {
+  name = &quot;Quotes API&quot;
+  body = templatefile(&quot;./openapi.json&quot;,
+    {
+      quote_receiver = &quot;${aws_lambda_function.quote_receiver.invoke_arn}&quot;,
+      quote_recover  = &quot;${aws_lambda_function.quote_recover.invoke_arn}&quot;
+    }
+  )
+}
+
+resource &quot;aws_api_gateway_deployment&quot; &quot;quotes&quot; {
+  rest_api_id = aws_api_gateway_rest_api.quotes.id
+}
+
+resource &quot;aws_api_gateway_stage&quot; &quot;quotes&quot; {
+  deployment_id = aws_api_gateway_deployment.quotes.id
+  rest_api_id   = aws_api_gateway_rest_api.quotes.id
+  stage_name    = &quot;dev&quot;
+}
+</div></code></code></pre>
+<p>Eu prefiro declarar o openapi usando yaml, mas, por alguma razão, o terraform não aceita yaml na sua definição do body. Por causa disso, instalei a extensão <a href="https://marketplace.visualstudio.com/items?itemName=philosowaffle.openapi-designer">openapi-designer</a> que compila os arquivos yaml para um único arquivo json. Minha definição para a API ficou assim:</p>
+<pre><code class="language-yaml"><div><span class="hljs-attr">openapi:</span> <span class="hljs-number">3.0</span><span class="hljs-number">.3</span>
+<span class="hljs-attr">info:</span>
+  <span class="hljs-attr">title:</span> <span class="hljs-string">Quotes</span> <span class="hljs-string">Api</span>
+  <span class="hljs-attr">description:</span> <span class="hljs-string">Api</span> <span class="hljs-string">para</span> <span class="hljs-string">consumo</span> <span class="hljs-string">e</span> <span class="hljs-string">envio</span> <span class="hljs-string">de</span> <span class="hljs-string">frases</span> <span class="hljs-string">para</span> <span class="hljs-string">a</span> <span class="hljs-string">aplicação.</span>
+  <span class="hljs-attr">version:</span> <span class="hljs-string">&quot;1.0&quot;</span>
+<span class="hljs-attr">paths:</span>
+  <span class="hljs-string">/quotes:</span>
+    <span class="hljs-attr">post:</span>
+      <span class="hljs-attr">summary:</span> <span class="hljs-string">Permite</span> <span class="hljs-string">gravar</span> <span class="hljs-string">uma</span> <span class="hljs-string">nova</span> <span class="hljs-string">frase</span> <span class="hljs-string">vilanesca!</span>
+      <span class="hljs-attr">requestBody:</span>
+        <span class="hljs-attr">required:</span> <span class="hljs-literal">true</span>
+        <span class="hljs-attr">content:</span>
+          <span class="hljs-attr">application/json:</span>
+            <span class="hljs-attr">schema:</span>
+              <span class="hljs-string">$ref:</span> <span class="hljs-string">&quot;#/components/schemas/Quote&quot;</span>
+      <span class="hljs-attr">x-amazon-apigateway-auth:</span>
+        <span class="hljs-attr">type:</span> <span class="hljs-string">none</span>
+      <span class="hljs-attr">x-amazon-apigateway-integration:</span>
+        <span class="hljs-attr">uri:</span> <span class="hljs-string">${quote_receiver}</span>
+        <span class="hljs-attr">httpMethod:</span> <span class="hljs-string">POST</span>
+        <span class="hljs-attr">type:</span> <span class="hljs-string">AWS_PROXY</span>
+      <span class="hljs-attr">responses:</span>
+        <span class="hljs-attr">&quot;201&quot;:</span>
+          <span class="hljs-attr">description:</span> <span class="hljs-string">Frase</span> <span class="hljs-string">vilanesca</span> <span class="hljs-string">gravada</span> <span class="hljs-string">com</span> <span class="hljs-string">sucesso!</span>
+    <span class="hljs-attr">get:</span>
+      <span class="hljs-attr">summary:</span> <span class="hljs-string">Retorna</span> <span class="hljs-string">as</span> <span class="hljs-string">frases</span> <span class="hljs-string">vilanesca</span> <span class="hljs-string">de</span> <span class="hljs-string">um</span> <span class="hljs-string">vilão.</span>
+      <span class="hljs-attr">parameters:</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">author</span>
+          <span class="hljs-attr">in:</span> <span class="hljs-string">query</span>
+          <span class="hljs-attr">required:</span> <span class="hljs-literal">true</span>
+          <span class="hljs-attr">description:</span> <span class="hljs-string">O</span> <span class="hljs-string">grade</span> <span class="hljs-string">vilão</span> <span class="hljs-string">por</span> <span class="hljs-string">trás</span> <span class="hljs-string">das</span> <span class="hljs-string">frases.</span>
+          <span class="hljs-attr">schema:</span>
+            <span class="hljs-attr">type:</span> <span class="hljs-string">string</span>
+      <span class="hljs-attr">x-amazon-apigateway-auth:</span>
+        <span class="hljs-attr">type:</span> <span class="hljs-string">none</span>
+      <span class="hljs-attr">x-amazon-apigateway-integration:</span>
+        <span class="hljs-attr">uri:</span> <span class="hljs-string">${quote_recover}</span>
+        <span class="hljs-attr">httpMethod:</span> <span class="hljs-string">POST</span>
+        <span class="hljs-attr">type:</span> <span class="hljs-string">AWS_PROXY</span>
+      <span class="hljs-attr">responses:</span>
+        <span class="hljs-attr">&quot;200&quot;:</span>
+          <span class="hljs-attr">description:</span> <span class="hljs-string">As</span> <span class="hljs-string">frases</span> <span class="hljs-string">vilanescas</span> <span class="hljs-string">para</span> <span class="hljs-string">o</span> <span class="hljs-string">vilão</span> <span class="hljs-string">selecionado.</span>
+          <span class="hljs-attr">content:</span>
+            <span class="hljs-attr">application/json:</span>
+              <span class="hljs-attr">schema:</span>
+                <span class="hljs-attr">type:</span> <span class="hljs-string">array</span>
+                <span class="hljs-attr">items:</span>
+                  <span class="hljs-string">$ref:</span> <span class="hljs-string">&quot;#/components/schemas/Quote&quot;</span>
+</div></code></pre>
+<p>Nossa API, portanto, tem um recurso <code>quote</code> que é disponível no path de <code>/quotes</code> e permite os métodos <code>POST</code> e <code>GET</code> sem necessidade de qualquer autorização de acesso.</p>
+<p>Como vimos em nosso diagrama, o objetivo do projeto é que as frases enviadas sejam enviadas para uma fila por uma função Lambda e depois recuperada por outra função e gravada no banco de dados. Aqui, já declaramos a integração também com a função lambda. Vale Notar:</p>
+<ul>
+<li>Observe que a integração agora é passada como parte do método através da propriedade <code>x-amazon-apigateway-integration</code>. O mesmo para a authorization com a propriedade <code>x-amazon-apigateway-auth</code>.</li>
+<li><code>integration_http_method</code> tem que ser do tipo <code>POST</code> para integração com Lambda. Ele informa como a api vai interagir com o backend;</li>
+<li><code>type</code> deve ser, no nosso caso, <code>AWS_PROXY</code>. Isso permite que a integração chame um recurso da AWS, no nosso caso a Lambda, e passe a request para a Lambda tratar.</li>
+<li>No pedaço de código acima, observe que falta a parte de <code>components</code>, que pode ser encontrada no repositório.</li>
+</ul>
+<h4 id="lambdas"><strong>Lambdas</strong></h4>
+<p>Para receber a mensagem da API, declaramos no nosso <code>lambda.tf</code>:</p>
+<pre><code class="language-hcl"><code><div># Lambdas para processar as frases
+data &quot;archive_file&quot; &quot;quote_receiver&quot; {
+  type        = &quot;zip&quot;
+  output_path = &quot;../lambdas/dist/quote_receiver.zip&quot;
+  source_dir  = &quot;../lambdas/quote-receiver/&quot;
+}
+
+resource &quot;aws_lambda_function&quot; &quot;quote_receiver&quot; {
+  function_name    = &quot;quote_receiver&quot;
+  filename         = data.archive_file.quote_receiver.output_path
+  source_code_hash = data.archive_file.quote_receiver.output_base64sha256
+  handler          = &quot;index.handler&quot;
+  runtime          = &quot;nodejs14.x&quot;
+  role             = &quot;fake_role&quot;
+  environment {
+    variables = {
+      SQS_URL = &quot;${resource.aws_sqs_queue.quotes.url}&quot;
+    }
+  }
+}
+
+---
+resource &quot;aws_lambda_event_source_mapping&quot; &quot;quotes&quot; {
+  event_source_arn = aws_sqs_queue.quotes.arn
+  function_name    = aws_lambda_function.quote_persister.arn
+}
+
+</div></code></code></pre>
+<p>Geramos aqui um arquivo que foi criado na execução do terraform a partir da compactação dos dados dentro da pasta <code>lambdas/quote-receiver</code>. O arquivo compactado é referenciado na criação da função. O mesmo ocorre para nossas outras funções, de persistência dos dados e de recuperação.</p>
+<p>Como é possível notar, temos um mapeamento da função <code>quote_persister</code> com a fila <code>SQS</code>. Isso nos permite receber eventos com as informações inseridas na fila sempre que forem adicionadas novas mensagens à ela.</p>
+<p>Um ponto interessante é que é possível passar variáveis de ambiente para a função, como é visto na passagem da variável <code>SQS_URL</code>.</p>
+<h4 id="fila-sqs"><strong>Fila SQS</strong></h4>
+<p>Declarar a fila também é muito simples:</p>
+<pre><code class="language-hcl"><code><div>resource &quot;aws_sqs_queue&quot; &quot;quotes&quot; {
+    name = &quot;Quotes&quot;
+}
+</div></code></code></pre>
+<h4 id="dynamodb"><strong>DynamoDB</strong></h4>
+<p>O provisionamento de uma tabela nova no dynamo demanda apeans os campos a seguir:</p>
+<pre><code class="language-hcl"><code><div>resource &quot;aws_dynamodb_table&quot; &quot;quotes&quot; {
+    name = &quot;Quotes&quot;
+    hash_key = &quot;author&quot;
+    billing_mode = &quot;PAY_PER_REQUEST&quot;
+    attribute {
+      name = &quot;author&quot;
+      type = &quot;S&quot;
+    }
+}
+</div></code></code></pre>
+<p>Poderíamos informar os demais atributos, mas apenas <code>hash_key</code> é obrigatória.
+Esse atributo é equivalente para a AWS ao <code>partition key</code>. Caso eu desejasse criar uma <code>sort key</code> eu deveria passá-la como
+<code>range_key</code> e também informar os dados do atributo. No código exemplo usei <code>sort key</code> para me permitir usar frases diferentes
+do mesmo autor.</p>
+<h2 id="código">Código</h2>
+<p>Temos apenas três funções muito simples, uma para receber quotes, uma para persistir e outra para recuperar. Os códigos completos estão no repositório, mas
+vale a pena pontuar alguns detalhes:</p>
+<pre><code class="language-javascript"><div><span class="hljs-keyword">const</span> { DynamoDBClient, BatchWriteItemCommand } = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;@aws-sdk/client-dynamodb&quot;</span>);
+<span class="hljs-keyword">const</span> { Marshaller } = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;@aws/dynamodb-auto-marshaller&quot;</span>);
+
+
+<span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> DynamoDBClient({ <span class="hljs-attr">endpoint</span>: <span class="hljs-string">`http://<span class="hljs-subst">${process.env.LOCALSTACK_HOSTNAME}</span>:4566`</span> });
+<span class="hljs-keyword">const</span> marshaller = <span class="hljs-keyword">new</span> Marshaller();
+<span class="hljs-built_in">exports</span>.save = <span class="hljs-function">(<span class="hljs-params">quotes</span>) =&gt;</span> client.send(<span class="hljs-keyword">new</span> BatchWriteItemCommand({
+    <span class="hljs-attr">RequestItems</span>: {
+        <span class="hljs-string">&quot;Quotes&quot;</span>: quotes
+            .map(<span class="hljs-function"><span class="hljs-params">quote</span> =&gt;</span> marshaller.marshallItem(quote))
+            .map(<span class="hljs-function"><span class="hljs-params">item</span> =&gt;</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Object</span>({ <span class="hljs-attr">PutRequest</span>: { <span class="hljs-attr">Item</span>: item } }))
+    }
+}));
+
+</div></code></pre>
+<ul>
+<li>O código para persistência de dados no Dynamo mostra o uso da SDK para JavaScript V3.</li>
+<li>Diferente da V2, essa versão permite importar apenas módulos que realmente serão necessários para a aplicação, deixando a Lambda muito mais leve.</li>
+<li>É necessário configurar o endpoint para os serviços da AWS.</li>
+<li>Usei a biblioteca <code>Marshaller</code> que é um mapper entre valores nativos JavaScript e AttributeValues do DynamoDB.</li>
+<li>A melhor forma de ver logs da aplicação é pelo <a href="https://app.localstack.cloud/">dashboard</a> da LocalStack.</li>
+</ul>
+<h2 id="rodando-nossa-aplicação">Rodando nossa aplicação</h2>
+<p>Uma vez que o ambiente está rodando através do docker-compose, podemos entrar na pasta <code>terraform</code> e executar o comando <code>terraform init</code>. Este comando irá criar uma pasta <code>.terraform</code> e outros arquivos no projeto. Quando terminado é a vez do comando <code>terraform apply --auto-approve</code> que realmente provisiona todos os recurso que declaramos no nossos arquivos <code>.tf</code>. Ao final, o comando irá disponibilizar como retorno a <code>API_ID</code>, necessária para testarmos a api em um http client.</p>
+<p>Assim que a aplicação subir, podemos testar sua funcionalidade com a collection de requests disponíve no arquivo <code>test.http</code>. Para rodar os testes nesse arquivo é necessário ter instalada a extensão <a href="https://marketplace.visualstudio.com/items?itemName=humao.rest-client">REST Client</a> para o Visual Studio Code. Uma vez instalada, troque o valor da variável @API_ID para aquele retornado pelo terraform e clique em send request.</p>
+<p>Para encerrar nossa aplicação, basta rodar o comando <code>docker-compose down -v</code> a partir do diretório raiz do projeto.</p>
+<h2 id="conclusão">Conclusão</h2>
+<p>A LocalStack é uma ótima ferramenta para realizar testes automatizados e rodar a aplicação em ambiente local, durante o desenvolvimento. Ela elimina a preocupação de
+se <em>sujar</em> um ambiente compartilhado por mais desenvolvedores e de se acabar tendo gastos financeiros por uso indevido da AWS, melhorando muito o processo de criação do código.</p>
+
+    </body>
+    </html>
