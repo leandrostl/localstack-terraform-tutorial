@@ -6,16 +6,52 @@
 1. Terraform
 
 ## O que vamos fazer
+### Definição da nossa POC
+![Diagrama do projeto](localstack-tutorial.png)
+
+O objetivo desse artigo é exemplificar o uso da LocalStack e o que é necessário para rodar um projeto simples. Para além do que usamos aqui, a ferramenta possui inúmeros outros recursos, bem como outros serviços AWS, que não abordarei.
+
 ### Repositório
 Todo esse projeto e os códigos completos estão disponíveis no seguinte [repositório](https://github.com/leandrostl/localstack-terraform-tutorial). Este texto contem alguns
 pedaços de código, mas que podem não estar completos.
 
-### Definição da nossa POC
-![Diagrama do projeto](localstack-tutorial.png)
+### *TL;DR*
 
-O objetivo desse artigo é exemplificar o uso da LocalStack e o que é necessário para rodar um projeto simples. Para além desse projeto, a ferramenta possui inúmeros outros recursos
-que não abordarei aqui, como sdk para testes, um [dashboard](https://app.localstack.cloud/) que pode ser acessado quando sua aplicação estiver rodando, além de disponibilizar vários outros
-serviços da AWS.
+#### Preparando o ambiente:
+
+1. Clone o projeto do [repositório](https://github.com/leandrostl/localstack-terraform-tutorial);
+2. Instale o docker a  partir da [documentação](https://docs.docker.com/engine/install/ubuntu/);
+3. Instale o docker-compose:
+   1. `sudo curl -L "https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose`
+   2. `sudo chmod +x /usr/local/bin/docker-compose`
+4. Instale o Python seguindo a [documentação oficial](https://python.org.br/instalacao-linux/);
+5. Instale o AWS CLI: [página oficial](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html);
+6. Instale o Localstack: `sudo python3 -m pip install localstack`
+7. Instale o awscli-local: `pip install awscli-local`
+8. Siga a [orientação oficial](https://www.terraform.io/downloads) para instalar o Terraform;
+9. NodeJs:
+   1.  NPM - [repositório oficial](https://github.com/nvm-sh/nvm#install--update-script)
+   2.  node - [comando descrito no repositório](https://github.com/nvm-sh/nvm#usage)
+
+#### Rodando a aplicação:
+
+1. No diretório raiz execute o comando: `docker-compose up -d`
+2. No diretório terraform execute: 
+   1. `terraform init`
+   2. `terraform apply --auto-approve
+3. Para testar:
+   1. Instale a extensão [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) para o VSCode;
+   2. Abra o arquivo `test.http`
+   3. Altere a variável `API_ID` para o id informado na saída do terraform;
+   4. Clique em send request para envio da request de POST;
+   5. Veririque os serviços e logs da sua aplicação em https://app.localstack.cloud/;
+   6. Verifique, após alguns segundos, se a frase está salva na base de dados, enviando a request de GET com o seu vilão favorito.
+
+#### Matando a aplicação:
+
+1. Use o comando `terraform destroy --auto-approve` a partir do diretório terraform para remover os serviços AWS
+2. Do diretório raiz, utilize o comando `docker-compose down -v` para apagar todos os recursos criados através do docker-compose.
+
 
 ### **Configurando o ambiente:**
 Estou usando uma máquina rodando ubuntu:
@@ -38,7 +74,7 @@ Vamos começar instalando o docker. Segui precisamente a [documentação](https:
 #### **Docker Compose**
 Docker compose foi um pouco mais complicado para instalar. A página do docker aponta para um *compose* numa versão bem antiga. Preferi entrar no [repositório do github](https://github.com/docker/compose/releases) para verificar e alterar o endereço no comando fornecido na página do Docker. Desta forma segui os passos:
 1. `sudo curl -L "https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose`
-1. `sudo chmod +x /usr/local/bin/docker-compose`
+2. `sudo chmod +x /usr/local/bin/docker-compose`
 
 Nesse momento a versão que tenho do docker-compose instalada é:
 
@@ -146,7 +182,7 @@ services:
 
 Para rodar o docker-compose, utilizei o comando `docker-compose up`, ele vai subir todo o ambiente. Se quiser continuar a usar o mesmo terminal para outras coisas, adicione o `-d` de *detatch*. Para parar se desfazer de todo o ambiente, basta rodar o `docker-compose down -v`. O `-v` informa que você também quer que os volumes criados sejam excluídos, liberando todos os recursos do computador.
 
-Uma vez em execução, é possível verificar se está tudo funcionando corretamente através da url `http://localhost:4566/health`.
+Uma vez em execução, é possível verificar se está tudo funcionando corretamente através da url http://localhost:4566/health e do [dashboard](https://app.localstack.cloud/). 
 
 ## Terraform
 
@@ -184,7 +220,7 @@ variable "defaut_endpoint" {
 } 
 ```
 #### **API**
-A declaração da api, o recurso quotes e os métodos são bem fáceis de compreender. 
+A declaração da api, o recurso quotes e os métodos são bem fáceis de compreender. E tem duas formas de se fazer isso. A primeira, é declarar blocos para cada api, recurso, integração, método:
 ```hcl
 # Declarando nossa api para acesso de frases e os métodos
 resource "aws_api_gateway_rest_api" "quotes" {
@@ -230,13 +266,90 @@ resource "aws_api_gateway_deployment" "quotes" {
   stage_name  = "dev"
 }
 ```
+Uma forma mais interessante de fazer isso é usando o [OpenAPI](https://spec.openapis.org/oas/v3.1.0) para declarar nossa api. Com isso, o nosso arquivo `rest-api.tf` fica bem mais simples:
+
+```hcl
+resource "aws_api_gateway_rest_api" "quotes" {
+  name = "Quotes API"
+  body = templatefile("./openapi.json",
+    {
+      quote_receiver = "${aws_lambda_function.quote_receiver.invoke_arn}",
+      quote_recover  = "${aws_lambda_function.quote_recover.invoke_arn}"
+    }
+  )
+}
+
+resource "aws_api_gateway_deployment" "quotes" {
+  rest_api_id = aws_api_gateway_rest_api.quotes.id
+}
+
+resource "aws_api_gateway_stage" "quotes" {
+  deployment_id = aws_api_gateway_deployment.quotes.id
+  rest_api_id   = aws_api_gateway_rest_api.quotes.id
+  stage_name    = "dev"
+}
+```
+
+Eu prefiro declarar o openapi usando yaml, mas, por alguma razão, o terraform não aceita yaml na sua definição do body. Por causa disso, instalei a extensão [openapi-designer](https://marketplace.visualstudio.com/items?itemName=philosowaffle.openapi-designer) que compila os arquivos yaml para um único arquivo json. Minha definição para a API ficou assim:
+```yaml
+openapi: 3.0.3
+info:
+  title: Quotes Api
+  description: Api para consumo e envio de frases para a aplicação.
+  version: "1.0"
+paths:
+  /quotes:
+    post:
+      summary: Permite gravar uma nova frase vilanesca!
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Quote"
+      x-amazon-apigateway-auth:
+        type: none
+      x-amazon-apigateway-integration:
+        uri: ${quote_receiver}
+        httpMethod: POST
+        type: AWS_PROXY
+      responses:
+        "201":
+          description: Frase vilanesca gravada com sucesso!
+    get:
+      summary: Retorna as frases vilanesca de um vilão.
+      parameters:
+        - name: author
+          in: query
+          required: true
+          description: O grade vilão por trás das frases.
+          schema:
+            type: string
+      x-amazon-apigateway-auth:
+        type: none
+      x-amazon-apigateway-integration:
+        uri: ${quote_recover}
+        httpMethod: POST
+        type: AWS_PROXY
+      responses:
+        "200":
+          description: As frases vilanescas para o vilão selecionado.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Quote"
+```
 
 Nossa API, portanto, tem um recurso `quote` que é disponível no path de `/quotes` e permite os métodos `POST` e `GET` sem necessidade de qualquer autorização de acesso.
 
 Como vimos em nosso diagrama, o objetivo do projeto é que as frases enviadas sejam enviadas para uma fila por uma função Lambda e depois recuperada por outra função e gravada no banco de dados. Aqui, já declaramos a integração também com a função lambda. Vale Notar:
 
+* Observe que a integração agora é passada como parte do método através da propriedade `x-amazon-apigateway-integration`. O mesmo para a authorization com a propriedade `x-amazon-apigateway-auth`.
 * `integration_http_method` tem que ser do tipo `POST` para integração com Lambda. Ele informa como a api vai interagir com o backend;
 * `type` deve ser, no nosso caso, `AWS_PROXY`. Isso permite que a integração chame um recurso da AWS, no nosso caso a Lambda, e passe a request para a Lambda tratar.
+* No pedaço de código acima, observe que falta a parte de `components`, que pode ser encontrada no repositório.
 
 #### **Lambdas**
 Para receber a mensagem da API, declaramos no nosso `lambda.tf`:
@@ -301,7 +414,7 @@ resource "aws_dynamodb_table" "quotes" {
 }
 ```
 
-Observe que eu poderia já informar os demais atributos, mas sou obrigado apenas a informar aquele referente à `hash_key`. 
+Poderíamos informar os demais atributos, mas apenas `hash_key` é obrigatória.
 Esse atributo é equivalente para a AWS ao `partition key`. Caso eu desejasse criar uma `sort key` eu deveria passá-la como 
 `range_key` e também informar os dados do atributo. No código exemplo usei `sort key` para me permitir usar frases diferentes
 do mesmo autor.
@@ -312,15 +425,18 @@ Temos apenas três funções muito simples, uma para receber quotes, uma para pe
 vale a pena pontuar alguns detalhes:
 
 ```javascript
-const { DynamoDBClient, PutItemCommand } = require("@aws-sdk/client-dynamodb");
+const { DynamoDBClient, BatchWriteItemCommand } = require("@aws-sdk/client-dynamodb");
 const { Marshaller } = require("@aws/dynamodb-auto-marshaller");
 
 
 const client = new DynamoDBClient({ endpoint: `http://${process.env.LOCALSTACK_HOSTNAME}:4566` });
 const marshaller = new Marshaller();
-exports.save = (quote) => client.send(new PutItemCommand({
-    TableName: "Quotes",
-    Item: marshaller.marshallItem(quote)
+exports.save = (quotes) => client.send(new BatchWriteItemCommand({
+    RequestItems: {
+        "Quotes": quotes
+            .map(quote => marshaller.marshallItem(quote))
+            .map(item => new Object({ PutRequest: { Item: item } }))
+    }
 }));
 
 ```
@@ -330,6 +446,14 @@ exports.save = (quote) => client.send(new PutItemCommand({
 - É necessário configurar o endpoint para os serviços da AWS.
 - Usei a biblioteca `Marshaller` que é um mapper entre valores nativos JavaScript e AttributeValues do DynamoDB.
 - A melhor forma de ver logs da aplicação é pelo [dashboard](https://app.localstack.cloud/) da LocalStack.
+
+## Rodando nossa aplicação
+
+Uma vez que o ambiente está rodando através do docker-compose, podemos entrar na pasta `terraform` e executar o comando `terraform init`. Este comando irá criar uma pasta `.terraform` e outros arquivos no projeto. Quando terminado é a vez do comando `terraform apply --auto-approve` que realmente provisiona todos os recurso que declaramos no nossos arquivos `.tf`. Ao final, o comando irá disponibilizar como retorno a `API_ID`, necessária para testarmos a api em um http client.
+
+Assim que a aplicação subir, podemos testar sua funcionalidade com a collection de requests disponíve no arquivo `test.http`. Para rodar os testes nesse arquivo é necessário ter instalada a extensão [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) para o Visual Studio Code. Uma vez instalada, troque o valor da variável @API_ID para aquele retornado pelo terraform e clique em send request. 
+
+Para encerrar nossa aplicação, basta rodar o comando `docker-compose down -v` a partir do diretório raiz do projeto.
 
 ## Conclusão
 A LocalStack é uma ótima ferramenta para realizar testes automatizados e rodar a aplicação em ambiente local, durante o desenvolvimento. Ela elimina a preocupação de
