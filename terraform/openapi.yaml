@@ -1,0 +1,70 @@
+openapi: 3.0.3
+info:
+  title: Quotes Api
+  description: Api para consumo e envio de frases para a aplicação.
+  version: "1.0"
+paths:
+  /quotes:
+    post:
+      summary: Permite gravar uma nova frase vilanesca!
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Quote"
+      x-amazon-apigateway-auth:
+        type: none
+      x-amazon-apigateway-integration:
+        uri: ${quote_receiver}
+        httpMethod: POST
+        type: AWS_PROXY
+      responses:
+        "201":
+          description: Frase vilanesca gravada com sucesso!
+    get:
+      summary: Retorna as frases vilanesca de um vilão.
+      parameters:
+        - name: author
+          in: query
+          required: true
+          description: O grade vilão por trás das frases.
+          schema:
+            type: string
+      x-amazon-apigateway-auth:
+        type: none
+      x-amazon-apigateway-integration:
+        uri: ${quote_recover}
+        httpMethod: POST
+        type: AWS_PROXY
+      responses:
+        "200":
+          description: As frases vilanescas para o vilão selecionado.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Quote"
+components:
+  schemas:
+    Quote:
+      type: object
+      properties:
+        author:
+          description: O autor da frase vilanesca!
+          type: string
+          example: Scar
+        quote:
+          description: A tal frase vilanesca.
+          type: string
+          example: I'm surrounded by idiots.
+        movie:
+          description: Em qual filme o vilão disse essa frase.
+          type: string
+          example: The Lion King
+        year:
+          description: Em que ano o vilão revelou toda a malevolência para o mundo.
+          type: integer
+          format: int32
+          example: 1995
