@@ -1,26 +1,26 @@
 ## O que você vai ver nesse artigo
-1. AWS services: apigateway, lambda, dynamodb
-1. Localstack Community
+1. AWS services: APIGateway, Lambda, DynamoDB
+1. LocalStack Community
 1. NodeJs
-1. Docker compose
+1. Docker Compose
 1. Terraform
 
 ## O que vamos fazer
-### Definição da nossa POC
+### Definição da nossa POC (Proof of Concept)
 ![Diagrama do projeto](localstack-tutorial.png)
 
 O objetivo desse artigo é exemplificar o uso da LocalStack e o que é necessário para rodar um projeto simples. Para além do que usamos aqui, a ferramenta possui inúmeros outros recursos, bem como outros serviços AWS, que não abordarei.
 
 ### Repositório
-Todo esse projeto e os códigos completos estão disponíveis no seguinte [repositório](https://github.com/leandrostl/localstack-terraform-tutorial). Este texto contem alguns
+Todo esse projeto e os códigos completos estão disponíveis no seguinte [repositório](https://github.com/leandrostl/localstack-terraform-tutorial). Este texto contém alguns
 pedaços de código, mas que podem não estar completos.
 
 ### *TL;DR*
 
 #### Preparando o ambiente:
 
-1. Clone o projeto do [repositório](https://github.com/leandrostl/localstack-terraform-tutorial);
-2. Instale o docker a  partir da [documentação](https://docs.docker.com/engine/install/ubuntu/);
+1. Clone o projeto do [repositório](https://github.com/leandrostl/LocalStack-terraform-tutorial);
+2. Instale o Docker a partir da [documentação](https://docs.docker.com/engine/install/ubuntu/);
 3. Instale o docker-compose:
    1. `sudo curl -L "https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose`
    2. `sudo chmod +x /usr/local/bin/docker-compose`
@@ -30,15 +30,15 @@ pedaços de código, mas que podem não estar completos.
 7. Instale o awscli-local: `pip install awscli-local`
 8. Siga a [orientação oficial](https://www.terraform.io/downloads) para instalar o Terraform;
 9. NodeJs:
-   1.  NPM - [repositório oficial](https://github.com/nvm-sh/nvm#install--update-script)
-   2.  node - [comando descrito no repositório](https://github.com/nvm-sh/nvm#usage)
+   1.  NVM: [repositório oficial](https://github.com/nvm-sh/nvm#install--update-script)
+   2.  NodeJs: [comando descrito no repositório](https://github.com/nvm-sh/nvm#usage)
 
 #### Rodando a aplicação:
 
 1. No diretório raiz execute o comando: `docker-compose up -d`
 2. No diretório terraform execute: 
    1. `terraform init`
-   2. `terraform apply --auto-approve
+   2. `terraform apply --auto-approve`
 3. Para testar:
    1. Instale a extensão [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) para o VSCode;
    2. Abra o arquivo `test.http`
@@ -54,29 +54,16 @@ pedaços de código, mas que podem não estar completos.
 
 
 ### **Configurando o ambiente:**
-Estou usando uma máquina rodando ubuntu:
-```bash
-    leandro@leandro-desktop ~> lsb_release -a
-    No LSB modules are available.
-    Distributor ID:	Ubuntu
-    Description:	Ubuntu 20.04.3 LTS
-    Release:	20.04
-    Codename:	focal
-```
+Estou usando uma máquina rodando Ubuntu 20.04.3 LTS. Tudo o que for feito aqui também é possível usando uma máquina Windows. Porém, os métodos para instalação mudam.
 
 #### **Docker**
-Vamos começar instalando o docker. Segui precisamente a [documentação](https://docs.docker.com/engine/install/ubuntu/) da página oficial para instalação no ubuntu. A versão que tenho instalada nesse momento é a:
-
-```bash
-    leandro@leandro-desktop ~> docker -v
-    Docker version 20.10.12, build e91ed57
-```
+Vamos começar instalando o Docker. Segui precisamente a documentação da página oficial para instalação no Ubuntu. Você pode verificar a versão instalada no seu ambiente com o comando `docker -v`. Para mim, ele retorna:  `Docker version 20.10.12, build e91ed57.`
 #### **Docker Compose**
-Docker compose foi um pouco mais complicado para instalar. A página do docker aponta para um *compose* numa versão bem antiga. Preferi entrar no [repositório do github](https://github.com/docker/compose/releases) para verificar e alterar o endereço no comando fornecido na página do Docker. Desta forma segui os passos:
+Docker Compose foi um pouco mais complicado para instalar. A página do Docker aponta para uma versão muito antiga do *compose*. Preferi entrar no [repositório do github](https://github.com/docker/compose/releases) para verificar e alterar o endereço no comando fornecido na página do Docker. Desta forma, executei os seguintes comandos:
 1. `sudo curl -L "https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose`
 2. `sudo chmod +x /usr/local/bin/docker-compose`
 
-Nesse momento a versão que tenho do docker-compose instalada é:
+Agora, a versão que tenho do docker-compose instalada é:
 
 ```bash
     leandro@leandro-desktop ~> docker-compose -v
@@ -84,7 +71,7 @@ Nesse momento a versão que tenho do docker-compose instalada é:
 ```
 
 #### **Python**
-A *localstack* faz uso do Python. Assim precisei instalar o compilador da linguagem e o gerenciador de pacotes. Segui a [documentação oficial](https://python.org.br/instalacao-linux/). Instalei as seguintes versões:
+A *LocalStack* usa o compilador Python. Assim precisei instalá-lo, além do gerenciador de pacotes. Segui a [documentação oficial](https://python.org.br/instalacao-linux/). Instalei as seguintes versões:
 ```bash
    leandro@leandro-desktop:~$ python3 --version
    Python 3.8.10
@@ -93,27 +80,27 @@ A *localstack* faz uso do Python. Assim precisei instalar o compilador da lingua
 ```
 
 #### **AWS CLI**
-Para rodar comandos no terminal para acesso aos dados de serviços da AWS, mesmo que na localstack, é necessário usar o *AWS CLI*. Para sua instalação, segui o passo a passo informado na [página oficial](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html). Verificando a versão, obtive:
+Para rodar comandos no terminal para acesso aos dados de serviços da AWS, mesmo que na LocalStack, é necessário usar o *AWS CLI*. Para sua instalação, eu segui o passo a passo informado na [página oficial](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html). Verificando a versão, obtive:
 
 ```bash
-leandro@leandro-desktop ~/W/R/localstack-terraform-tutorial (main)> aws --version
+leandro@leandro-desktop ~> aws --version
 aws-cli/2.4.11 Python/3.8.8 Linux/5.4.0-94-generic exe/x86_64.ubuntu.20 prompt/off
 ```
 
-#### **Localstack**
-Para instalar o localstack eu tentei seguir o repositório oficial que dizia que não deveria ser instalado usando *sudo*, mas não funcionou. Instalei com o seguinte comando:
+#### **LocalStack**
+Para instalar o LocalStack eu tentei seguir o repositório oficial que dizia que não deveria ser instalado usando *sudo*, mas não funcionou. Instalei com o seguinte comando:
 ```bash
    sudo python3 -m pip install localstack
 ```
 e a versão que tenho instalada é:
 ```bash
-leandro@leandro-desktop:~$ localstack --version
+leandro@leandro-desktop:~$ LocalStack --version
 0.13.3.1
 ```
 Também instalei o awscli-local com o comando `pip install awscli-local`. 
 
 #### **Terraform**
-O Terraform é uma ferramenta de código de infraestrutura ou, *infrastructure as a code*. É open-source e mantido pela HashCorp. Para instalar, segui a [orientação oficial](https://www.terraform.io/downloads). Depois de instalado, testei a versão para:
+O Terraform é uma ferramenta de código de infraestrutura ou *infrastructure as a code*. É open source e mantido pela HashCorp. Para instalar, segui a [orientação oficial](https://www.terraform.io/downloads). Após instalado, testei a versão para:
 
 ```bash
 leandro@leandro-desktop:~$ terraform -v
@@ -122,11 +109,11 @@ on linux_amd64
 ```
 
 #### **NodeJs**
-A escolha de *NodeJs* para esse tutorial foi bastante concorrida com *Python*. Mas pesou o conhecimento e a reutilização do *JavaScrip* em frontends. Aqui vai uma [análise bem interessante](https://dashbird.io/blog/most-efficient-lambda-language/) sobre as possíveis linguagens para desenvolvimento para *AWS Lambdas*.
+A escolha de *NodeJs* para esse tutorial foi bastante concorrida com *Python*. Mas pesou o conhecimento e a reutilização do *JavaScript* em front-end. Aqui vai uma [análise bem interessante](https://dashbird.io/blog/most-efficient-lambda-language/) sobre as possíveis linguagens para desenvolvimento para *AWS Lambdas*.
 
-Para instalar o Node no meu ambiente eu optei por usar o [NVM, gerenciador de versão do node](https://nodejs.org/en/download/package-manager/#nvm). Esse gerenciador pode ser baixado do [repositório oficial](https://github.com/nvm-sh/nvm#install--update-script). Depois de instalado o NVM, basta seguir o [comando descrito no repositório](https://github.com/nvm-sh/nvm#usage).
+Para instalar o Node no meu ambiente eu optei por usar o [NVM, gerenciador de versão do NodeJs](https://nodejs.org/en/download/package-manager/#nvm). Esse gerenciador pode ser baixado do [repositório oficial](https://github.com/nvm-sh/nvm#install--update-script). Após instalado o NVM, basta seguir o [comando descrito no repositório](https://github.com/nvm-sh/nvm#usage).
 
-Com isso a versão do noje na minha máquina ficou:
+Com isso a versão do Node na minha máquina ficou:
 ```bash
 leandro@leandro-desktop:~$ node -v
 v16.13.2
@@ -136,16 +123,16 @@ leandro@leandro-desktop:~$ npm -v
 
 ## AWS Cloud
 Escolhi abordar os seguintes serviços da AWS:
-* [API Gateway](https://docs.aws.amazon.com/cli/latest/reference/apigateway/index.html): Permite criar endpoints e associa-los a um backend.
+* [API Gateway](https://docs.aws.amazon.com/cli/latest/reference/apigateway/index.html): Permite criar endpoints e associá-los a um back-end.
 * [Cloudwatch](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/cloudwatch/index.html?highlight=cloudwatch): Permite monitorar a aplicação com alarmes e logs.
 * [Lambda](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/lambda/index.html): Permite executar uma função sem a necessidade de provisionar ou gerenciar um servidor.
 * [DynamoDB](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/dynamodb/index.html): Banco de dados não relacional, *NoSQL*, da AWS.
 * [SQS - Simple Queue Service](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/sqs/index.html): Como o nome bem informa, é um serviço de filas de mensagens.
 
-A escolhas são baseadas em necessidades pessoais e naquilo que a localstack oferece gratuitamente.
+As escolhas são baseadas em necessidades pessoais e naquilo que a LocalStack oferece gratuitamente.
 
-## Localstack
-Para iniciar nosso projeto, é necessário subir a localstack em um container com as configurações adequadas para o ele. Para isso usei o docker compose e criei um script seguindo a [página oficial](https://docs.localstack.cloud/get-started/#docker-compose). Além disso, busquei compreender e alterar alguns pontos, conforme a [documentação de configuração](https://docs.localstack.cloud/localstack/configuration/). Com isso, meu `docker-compose` ficou assim:
+## LocalStack
+Para iniciar nosso projeto, é necessário subir a LocalStack em um container com as configurações adequadas para o ele. Para isso usei o docker-compose e criei um script seguindo a [página oficial](https://docs.LocalStack.cloud/get-started/#docker-compose). Além disso, busquei compreender e alterar alguns pontos, conforme a [documentação de configuração](https://docs.LocalStack.cloud/localstack/configuration/). Com isso, meu `docker-compose` ficou assim:
 
 ```yaml
 version: "3.8"
@@ -180,14 +167,14 @@ services:
 
 ```
 
-Para rodar o docker-compose, utilizei o comando `docker-compose up`, ele vai subir todo o ambiente. Se quiser continuar a usar o mesmo terminal para outras coisas, adicione o `-d` de *detatch*. Para parar se desfazer de todo o ambiente, basta rodar o `docker-compose down -v`. O `-v` informa que você também quer que os volumes criados sejam excluídos, liberando todos os recursos do computador.
+Para rodar o docker-compose, utilizei o comando `docker-compose up`, ele vai subir todo o ambiente. Se quiser continuar a usar o mesmo terminal para outras coisas, adicione o `-d` de *detatch*. Para parar e desfazer de todo o ambiente, basta rodar o `docker-compose down -v`. O `-v` informa que você também quer que os volumes criados sejam excluídos, liberando todos os recursos do computador.
 
-Uma vez em execução, é possível verificar se está tudo funcionando corretamente através da url http://localhost:4566/health e do [dashboard](https://app.localstack.cloud/). 
+Uma vez em execução, é possível verificar se está tudo funcionando corretamente através da URL http://localhost:4566/health e do [dashboard](https://app.localstack.cloud/) oferecido pela LocalStack.
 
 ## Terraform
 
 Agora vamos prover os serviços e suas configurações através do Terraform, especificando os recursos em arquivos `.tf` que coloquei na pasta `terraform`. 
-Seguindo a [documentação do localstack](https://docs.localstack.cloud/integrations/terraform/), primeiro declaramos o `provider "aws"`:
+Seguindo a [documentação da LocalStack](https://docs.localstack.cloud/integrations/terraform/), primeiro declaramos o `provider "aws"`:
 
 ```hcl
 provider "aws" {
@@ -210,14 +197,14 @@ provider "aws" {
 }
 ``` 
 
-Observe que é necessário apontar os serviços da aws para o LocalStack. Aqui, eu preferi criar uma variável `default_endpoint` para manter o endereço:
+Observe que é necessário apontar os serviços da AWS para o LocalStack. Aqui, eu preferi criar uma variável `default_endpoint` para manter o endereço:
 
 ```hcl
 variable "defaut_endpoint" {
   description = "Endpoint padrão para os serviços AWS local."
-  default = "http://localhost:4566"
-  type = string
-} 
+  default     = "http://localhost:4566"
+  type        = string
+}
 ```
 #### **API**
 A declaração da api, o recurso quotes e os métodos são bem fáceis de compreender. E tem duas formas de se fazer isso. A primeira, é declarar blocos para cada api, recurso, integração, método:
@@ -258,10 +245,6 @@ resource "aws_api_gateway_integration" "quote_receiver" {
 }
 
 resource "aws_api_gateway_deployment" "quotes" {
-  depends_on = [
-    aws_api_gateway_integration.quote_receiver,
-  ]
-
   rest_api_id = aws_api_gateway_rest_api.quotes.id
   stage_name  = "dev"
 }
@@ -289,8 +272,7 @@ resource "aws_api_gateway_stage" "quotes" {
   stage_name    = "dev"
 }
 ```
-
-Eu prefiro declarar o openapi usando yaml, mas, por alguma razão, o terraform não aceita yaml na sua definição do body. Por causa disso, instalei a extensão [openapi-designer](https://marketplace.visualstudio.com/items?itemName=philosowaffle.openapi-designer) que compila os arquivos yaml para um único arquivo json. Minha definição para a API ficou assim:
+Eu prefiro declarar o openapi usando yaml, mas, por alguma razão, o Terraform não aceita yaml na sua definição do body. Por isso, instalei a extensão [openapi-designer](https://marketplace.visualstudio.com/items?itemName=philosowaffle.openapi-designer) que compila os arquivos yaml para um único arquivo json. Minha definição para a API ficou assim:
 ```yaml
 openapi: 3.0.3
 info:
@@ -344,12 +326,13 @@ paths:
 
 Nossa API, portanto, tem um recurso `quote` que é disponível no path de `/quotes` e permite os métodos `POST` e `GET` sem necessidade de qualquer autorização de acesso.
 
-Como vimos em nosso diagrama, o objetivo do projeto é que as frases enviadas sejam enviadas para uma fila por uma função Lambda e depois recuperada por outra função e gravada no banco de dados. Aqui, já declaramos a integração também com a função lambda. Vale Notar:
+Como vimos em nosso diagrama, o objetivo do projeto é que as frases enviadas sejam enviadas para uma fila por uma função Lambda e depois recuperada por outra função e gravada no banco de dados. Aqui, já declaramos a integração também com a função lambda. Vale notar:
 
 * Observe que a integração agora é passada como parte do método através da propriedade `x-amazon-apigateway-integration`. O mesmo para a authorization com a propriedade `x-amazon-apigateway-auth`.
+* O Terraform trata o arquivo pelo método templatefile que troca os valores como `${quote_receiver}` pelo valor passado como parâmetro.
 * `integration_http_method` tem que ser do tipo `POST` para integração com Lambda. Ele informa como a api vai interagir com o backend;
 * `type` deve ser, no nosso caso, `AWS_PROXY`. Isso permite que a integração chame um recurso da AWS, no nosso caso a Lambda, e passe a request para a Lambda tratar.
-* No pedaço de código acima, observe que falta a parte de `components`, que pode ser encontrada no repositório.
+* No arquivo yaml acima, observe que falta a parte de `components`, que pode ser encontrada no repositório.
 
 #### **Lambdas**
 Para receber a mensagem da API, declaramos no nosso `lambda.tf`:
